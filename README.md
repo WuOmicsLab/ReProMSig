@@ -49,15 +49,12 @@ Patient annotation file consists of three groups of columns including fixed colu
 Molecular profile file is a feature-by-sample matrix in TXT/CSV/Excel format. Feature IDs should be provided at the first column with a column name "ID". The additional columns are molecular features for each sample with sample identifiers as column names. Molecular features could be gene mutation status, mRNA/non-coding RNA/protein quantification levels, methylation levels, etc. 
 
 ## Usages 
-The main function is `repromsig.sh`, which takes two aforementioned yaml files as input. 
-
 ```bash
-# 
+# The main function is repromsig.sh, which takes two aforementioned yaml files as input. 
 bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
 
 # running example project
-bash scripts/repromsig.sh ColoGuide_Stage_II_private/input/analysis.yaml $ColoGuide_Stage_II_private/input/reporting.yaml
-
+bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuide_Stage_II_local/input/reporting.yaml
 ```
 
 This analysis will create multiple result folders containing output RData files, tables and plots described here within the output_dir configured  in the analysis.yaml  file.
