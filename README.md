@@ -78,5 +78,11 @@ tripod.report.input.R | Generate the variables, tables and graphs for a signatur
 tripod.report.html.R | Save out the reporting html file by extract data from analysis output and used-provided "tripod yaml file".
 local.rdata.generate.R | Save out the RData file that could be uploaded to the ReProSig website, for displaying and sharing.
 
+## License
+ReProMSig is free for academic users of non-commercial purposes. Commercial use of ReProMSig requires a license. If ReProMSig package was used for your analysis, please cite our package.
+
+## Contact information
+Lihua Cao (lihuacao@bjcancer.org), Tingting Zhao, Jianmin Wu (wujm@bjmu.edu.cn).
+
 
 
