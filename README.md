@@ -57,9 +57,9 @@ bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
 bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuide_Stage_II_local/input/reporting.yaml
 ```
 
-This analysis will create multiple result folders containing output RData files, tables and plots described here within the output_dir configured  in the analysis.yaml  file.
+This analysis will create multiple result folders containing output RData files, tables and plots described here.
 
-<b>Note</b>: the RData and reporting html in$output_dir/upload/are the two core output files that could be uploaded to "My signature" module of ReProMSig (only for registered users) for displaying and sharing.
+<b>Note</b>: the RData file and Reporting html file in the <b>upload</b> sub-directory are the  core output files that could be uploaded to "My signature" module of ReProMSig (only for registered users) for displaying and sharing.
 
 ## Script details
 `repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, see below for details:
