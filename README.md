@@ -33,16 +33,50 @@ pip install shyaml
 
 The main function $(pwd)/scripts/repromsig.sh takes two config files in YAML format as input. And user also should provide clinicopathological and/or molecular datasets that will be taken as training and validation cohort(s).
 
-###  1) Config file for analysis (YAML format)
+####  1) Config file for analysis (YAML format)
 This YAML file consists of information for data path and analysis parameters. Please see$(pwd)/example/analysis.yaml for an example file and xx for a complete list of configurations.
 
-###  2) Config file for reporting (YAML format)
+####  2) Config file for reporting (YAML format)
 This YAML file consists of information for generating the reporting file of the developed siganture, including generanl descriptions and the structured items according to the TRIPOD guideline. Please see$(pwd)/example/reporting.yaml for an example.
 
-### 3) Clinicopathological / Molecular profile files
+#### 3) Clinicopathological / Molecular profile files
 Please visit [ReProMsig tutorial](https://omics.bjcancer.org/prognosis/) (section '1.1 Private datasets') for details.
-#### Patient annotation
+
+- <b>Patient annotation</b>
 Patient annotation file consists of three groups of columns including fixed columns, endpoint columns and custom columns. The names of fixed columns should be identical to the table template file. These clinicopathological parameters will be used for query samples suitable for analysis, as well as for prognosis model development. Please note that missing values in all columns should be provided as "NA". You can generate the formatted patient annotation file by modifying the template file.
 
-#### Molecular profiles
+- <b>Molecular profiles</b>
 Molecular profile file is a feature-by-sample matrix in TXT/CSV/Excel format. Feature IDs should be provided at the first column with a column name "ID". The additional columns are molecular features for each sample with sample identifiers as column names. Molecular features could be gene mutation status, mRNA/non-coding RNA/protein quantification levels, methylation levels, etc. 
+
+## Usages 
+The main function is `repromsig.sh`, which takes two aforementioned yaml files as input. 
+
+```bash
+# 
+bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
+
+# running example project
+bash scripts/repromsig.sh ColoGuide_Stage_II_private/input/analysis.yaml $ColoGuide_Stage_II_private/input/reporting.yaml
+
+```
+
+This analysis will create multiple result folders containing output RData files, tables and plots described here within the output_dir configured  in the analysis.yaml  file.
+
+<b>Note</b>: the RData and reporting html in$output_dir/upload/are the two core output files that could be uploaded to "My signature" module of ReProMSig (only for registered users) for displaying and sharing.
+
+## Script details
+`repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, see below for details:
+
+Script |Description
+:-|:-
+ymal.process.R | Data processing, analysis parameters extraction from the user-provided "analysis yaml file".
+model.analysis.R | Predictors selection, multivariable prediction model building, signature score calculation and patient risk group stratification
+independence.analysis.R |	Perform univariate and multivariate Cox regression analyses, to test whether the signature is an independent prognostic or predictive factor. 
+performance.analysis.R | Model evaluation, including time dependent receiver operating characteristic (ROC), prediction error (PE) , and calibration analysis.
+KM.evaluate.analysis.R | Inspect the survival differences between risk groups by Kaplan-Meier analysis and log-rank test. 
+tripod.report.input.R | Generate the variables, tables and graphs for a signature that will be displayed on the web and in the reporting file.
+tripod.report.html.R | Save out the reporting html file by extract data from analysis output and used-provided "tripod yaml file".
+local.rdata.generate.R | Save out the RData file that could be uploaded to the ReProSig website, for displaying and sharing.
+
+
+
