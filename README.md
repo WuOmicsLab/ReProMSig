@@ -66,14 +66,14 @@ This analysis will create multiple result folders containing output RData files,
 
 Script |Description
 :-|:-
-ymal.process.R | Data processing, analysis parameters extraction from the user-provided "analysis yaml file".
-model.analysis.R | Predictors selection, multivariable prediction model building, signature score calculation and patient risk group stratification
+ymal.process.R | Data processing and extract analysis parameters from the user-provided `analysis.yaml`.
+model.analysis.R | Perform predictor selection, multivariable prediction model building, signature score calculation and patient risk group stratification.
 independence.analysis.R |	Perform univariate and multivariate Cox regression analyses, to test whether the signature is an independent prognostic or predictive factor. 
-performance.analysis.R | Model evaluation, including time dependent receiver operating characteristic (ROC), prediction error (PE) , and calibration analysis.
+performance.analysis.R | Perform model evaluation, including time dependent receiver operating characteristic (ROC), prediction error (PE) , and calibration analysis.
 KM.evaluate.analysis.R | Inspect the survival differences between risk groups by Kaplan-Meier analysis and log-rank test. 
-tripod.report.input.R | Generate the variables, tables and graphs for a signature that will be displayed on the web and in the reporting file.
-tripod.report.html.R | Save out the reporting html file by extract data from analysis output and used-provided "tripod yaml file".
-local.rdata.generate.R | Save out the RData file that could be uploaded to the ReProSig website, for displaying and sharing.
+tripod.report.input.R | Generate the variables, tables and graphs for a signature that will be shown in the reporting file.
+tripod.report.html.R | Export the reporting html file by extract data from analysis output and used-provided "tripod yaml file".
+local.rdata.generate.R | Export the RData file that could be uploaded to the ReProSig website, for displaying and sharing.
 
 ## License
 ReProMSig is free for academic users of non-commercial purposes. Commercial use of ReProMSig requires a license. If ReProMSig package was used for your analysis, please cite our package.
