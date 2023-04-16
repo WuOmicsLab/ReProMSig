@@ -1,6 +1,0 @@
-"Raw Rank","Variable","Value","No. of Patients","No. of Events","Hazard Ratio (95% CI)<br />Univariate analysis","P<br />Univariate analysis","Hazard Ratio (95% CI)<br />Multivariate analysis","P<br />Multivariate analysis"
-1,"Signature group","Low risk (ref.)","73","12","","","",""
-2,"Signature group","High risk","23","18","8.629 (4.072-18.285)","1.9e-08","7.5 (3.398-16.553)","6.1e-07"
-3,"MSI_status","MSI-H (ref.)","12","2","","","",""
-4,"MSI_status","MSI-L","5","3","4.055 (0.677-24.297)","0.125","3.257 (0.539-19.701)","0.198"
-5,"MSI_status","MSS","69","23","2.139 (0.503-9.096)","0.303","1.265 (0.289-5.539)","0.755"
