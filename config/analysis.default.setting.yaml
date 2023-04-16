@@ -1,0 +1,83 @@
+
+## Direcotry paths for storing input data and output result files.
+input_dir:
+output_dir:
+
+## Information for training and validation cohorts
+candidate_genes_file:
+
+training_cohort:
+  dataset_name:
+  molecular_profile_file:
+  patient_annotation_file:
+  primary_site:
+  sample_type:
+  molecular_profiling:
+  log_transform_type:
+  geo_url:
+  pubmed_id:
+  accession_number:
+  accession_url:
+  clinical_number:
+  clinical_url:
+
+validation_cohort_1:
+    dataset_name:
+    molecular_profile_file:
+    patient_annotation_file:
+    primary_site:
+    sample_type:
+    molecular_profiling:
+    log_transform_type:
+    geo_url:
+    pubmed_id:
+    accession_number:
+    accession_url:
+    clinical_number:
+    clinical_url:
+
+validation_cohort_2:
+    dataset_name:
+    molecular_profile_file:
+    patient_annotation_file:
+    primary_site:
+    sample_type:
+    molecular_profiling:
+    log_transform_type:
+    geo_url:
+    pubmed_id:
+    accession_number:
+    accession_url:
+    clinical_number:
+    clinical_url:
+
+
+## Basic parameters for signature building and evaluation
+basic_settings:
+  signature_name: repromsig_signature
+  endpoint: 
+  time_intervals_months: [12, 36, 60]
+  variables_for_independence_test: 
+  variables_for_association_analysis: 
+  number_of_groups: 2
+  
+## Advanced parameters for experienced users to customize signature building and evaluation procedure
+advanced_settings:
+  predictor_selection: "Yes"
+  predictor_selection_method: SPCA
+  signature_generation_method: COX
+
+  bootstrap_iterations: 200
+  bootstrap_frequency: 50
+
+  variables_for_nomogram: NULL
+  method_to_stratify_patients: Percentile
+  # for number_of_groups = 2
+  2groups_high_percentile: 50
+  2groups_low_percentile: 50
+
+  # for number_of_groups = 3
+  3groups_high_percentile: 25
+  3groups_moderate_percentile: [25, 75]
+  3groups_low_percentile: 75
+
