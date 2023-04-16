@@ -144,7 +144,11 @@ table_surv_prob_rdata <- gsub(" ","",table_surv_prob_rdata)
 user_tripod_rdata <- get_value_tripod.ccb(config_file = tripod.ini.file, key = 'user_tripod_rdata')[[1]]
 
 user_tripod_rdata <- gsub(" ","", user_tripod_rdata)
+<<<<<<< HEAD
 add_info_tripod_rdata <- paste0(b.user.sig.path,"/rda/add_info_tripod.RData")
+=======
+add_info_tripod_rdata <- paste0(b.user.sig.path,"/add_info_tripod.RData")
+>>>>>>> 3dc569cd21c0c82ae09bf287b4437ef46eb3b30d
 
 # load data ----
 load(user.filtered.datasets.rdata)

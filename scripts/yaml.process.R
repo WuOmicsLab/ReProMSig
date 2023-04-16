@@ -496,7 +496,11 @@ adv_default <- list(predictor_selection = "Yes", predictor_selection_method = "S
                     bootstrap_iterations = 200, bootstrap_frequency = 45, batch_correction = NULL,
                     signature_generation_method = "COX", method_to_stratify_patients = "Percentile",
                     number_of_groups = 2, "2groups_high_percentile" = 50, "2groups_low_percentile" = 50, 
+<<<<<<< HEAD
                     "3groups_high_percentile" = 75, "3groups_moderate_percentile" = as.integer(c(25, 75)), 
+=======
+                    "3groups_high_percentile" = 75, "3groups_moderate_percentile" = "[25, 75]", 
+>>>>>>> 3dc569cd21c0c82ae09bf287b4437ef46eb3b30d
                     "3groups_low_percentile" = 25, variables_for_subgroup_Kaplan_Meier_analysis = NULL, 
                     combine_age_cutoff = NULL, combine_stage_category1 = NULL, combine_stage_category2 = NULL,
                     combine_N_category1 = NULL, combine_N_category2 = NULL, combine_T_category1 = NULL, combine_T_category2 = NULL,
