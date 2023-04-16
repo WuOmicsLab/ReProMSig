@@ -31,16 +31,16 @@ pip install shyaml
 
 ## Prepare data before running
 
-The main function $(pwd)/scripts/repromsig.sh takes two config files in YAML format as input. And user also should provide clinicopathological and/or molecular datasets that will be taken as training and validation cohort(s).
+The portal script `repromsig.sh` takes two config files in YAML format as input. User need to provide clinicopathological and/or molecular profiles that will be used as training and validation cohort(s).
 
 ####  1) Config file for analysis (YAML format)
-This YAML file consists of data path and analysis parameters. Please see ColoGuide_Stage_II_local/input/analysis.yaml for an example and config/analysis.default.setting.yaml for a complete list of configurations.
+This YAML file consists of data path and analysis parameters. Please see `ColoGuide_Stage_II_local/input/analysis.yaml` for an example and config/analysis.default.setting.yaml for a complete list of configurations.
 
 ####  2) Config file for reporting (YAML format)
-This YAML file consists of structured information needed for generating the reporting file of a developed siganture, according to the [TRIPOD guideline](https://www.tripod-statement.org/). Please see ColoGuide_Stage_II_local/input/reporting.yaml for an example.
+This YAML file consists of structured information needed for generating the reporting file of a developed siganture, according to the [TRIPOD guideline](https://www.tripod-statement.org/). Please see `ColoGuide_Stage_II_local/input/reporting.yaml` for an example.
 
 #### 3) Clinicopathological / Molecular profile files
-Please visit [ReProMsig tutorial](https://omics.bjcancer.org/prognosis/) (section '1.1 Private datasets') for details.
+Please visit [ReProMsig tutorial](https://omics.bjcancer.org/prognosis/) (section '1.1 Private datasets') for file format details.
 
 - <b>Patient annotation</b>
 Patient annotation file consists of three groups of columns including fixed columns, endpoint columns and custom columns. The names of fixed columns should be identical to the table template file. These clinicopathological parameters will be used for query samples suitable for analysis, as well as for prognosis model development. Please note that missing values in all columns should be provided as "NA". You can generate the formatted patient annotation file by modifying the template file.
@@ -59,7 +59,7 @@ bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuid
 
 This analysis will create multiple result folders containing output RData files, tables and plots described here.
 
-<b>Note</b>: the RData file and Reporting html file in the <b>upload</b> sub-directory are the main output files that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) (only for registered users) for sharing.
+<b>Note</b>: The RData file and Reporting html file in the <b>upload</b> sub-directory are the main output files that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
 
 ## Script details
 `repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, see below for details:
