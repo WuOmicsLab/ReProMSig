@@ -1,0 +1,169 @@
+########## Title and Signature summary ##########
+Lead_contact: "Jianmin Wu"
+Email_address: "wujm@bjmu.edu.cn"
+Organization: "Peking University Cancer Hospital & Institute"
+Signature_summary:
+  Signature_description: "A 10-gene expression signature for stage II colorectal cancer prognosis, developed and evaluated by ReProMSig, using published gene expression datasets and clinicopathological information."
+  ########## Training & Validation datasets ##########
+  training_cohort:
+    dataset_name: "ProLT_stageII"
+    pubmed_id: "22991413"
+    accession_number: "GSE30378, GSE24550 (96 in total)"
+    accession_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30378, https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24550"
+    clinical_number:
+    clinical_url:
+
+  validation_cohort_1:
+    dataset_name: "ProLT_stageIII"
+    pubmed_id: "22991413"
+    accession_number: "GSE30378, GSE24550 (76 in total)"
+    accession_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30378, https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE24550"
+    clinical_number:
+    clinical_url:
+
+  validation_cohort_2:
+    dataset_name: "ProV_stageII"
+    pubmed_id: "19996206, 19914252"
+    accession_number: "GSE14333, GSE17538 (108 in total)"
+    accession_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE14333, https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17538"
+    clinical_number:
+    clinical_url:
+
+
+  validation_cohort_3:
+    dataset_name: "ProV_stageIII"
+    pubmed_id: "19996206, 19914252"
+    accession_number: "GSE14333, GSE17538 (110 in total)"
+    accession_url: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE14333, https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE17538"
+    clinical_number:
+    clinical_url:
+    
+########## Items of methods ##########
+Item4_Source_of_data: 
+  ########## Item 4a ##########  
+  Item4a_training_Study_design: "Sourced from 2 independent series of altogether 96 patients with stage II CRC.
+
+    - 52 samples from GSE30378 were taken from patients treated surgically at different hospitals in the Oslo region, before adjuvant chemotherapy becoming standard treatment for stage III patients;
+
+    - 44 samples from GSE24550 were consecutively collected from patients treated by curative resection at a Norwegian hospital (Aker University Hospital, Oslo, Norway)."
+
+  Item4a_validation_Study_design: 
+    validation_cohort-1: "ProLT_stageIII: sourced from 2 independent series of altogether 76 patients with stage III CRC.  
+
+    - 43 samples from GSE30378 were taken from patients treated surgically at different hospitals in the Oslo region, before adjuvant chemotherapy becoming standard treatment for stage III patients;
+
+    - 33 samples from GSE24550 were consecutively collected from patients treated by curative resection at a Norwegian hospital (Aker University Hospital, Oslo, Norway)."
+
+    validation_cohort-2: "ProV_stageII: sourced from 2 independent series of altogether 108 patients with stage II CRC.
+
+    - Consecutive patients from GSE14333 (n = 94) were retrieved from the tissue banks of the Royal Melbourne Hospital and the H. Lee Moffitt Cancer Center in the United States.
+
+    - Patients from GSE17538 (n = 14) were treated at the Vanderbilt Medical Centre (Nashville, TN, USA)."
+
+    validation_cohort-3: "ProV_stageIII: sourced from 2 independent series of altogether 110 patients with stage III CRC.
+
+    - Consecutive patients from GSE14333 (n = 91) were retrieved from the tissue banks of the Royal Melbourne Hospital and the H. Lee Moffitt Cancer Center in the United States.
+
+    - Patients from GSE17538 (n = 19) were treated at the Vanderbilt Medical Centre (Nashville, TN, USA)."
+
+  ########## Item 4b ##########
+  Item4b_training_Key_study_dates: "52 patients from GSE30378 were recruited from 1987 to 1989, and 44 patients from GSE24550 were recruited from 2005 to 2008."
+
+  Item4b_validation_Key_study_dates: 
+
+    validation_cohort-1: "ProLT_stageIII: 43 patients from GSE30378 were recruited from 1987 to 1989, and 33 patients from GSE24550 were recruited from 2005 to 2008."
+
+    validation_cohort-2: "ProV_stageII: Not mentioned in this dataset."
+
+    validation_cohort-3: "ProV_stageIII: Not mentioned in this dataset."
+
+
+Item5_Participants:
+  ########## Item 5a ##########  
+  Item5a_training_Key_study_setting: "- 52 patients were collected from hospitals in the Oslo region.\n- 44 patients were consecutively collected at Oslo University Hospital, Aker, Norway."
+
+  Item5a_validation_Key_study_setting: 
+    validation_cohort-1: "ProLT_stageIII:    
+
+    - 43 patients were collected from hospitals in the Oslo region.
+
+    - 33 patients were consecutively collected at Oslo University Hospital, Aker, Norway."
+
+    validation_cohort-2: "ProV_stageII: Patients were collected at H Lee Moffitt Cancer Center, Royal Melbourne Hospital, and Vanderbilt University Medical Center."
+
+    validation_cohort-3: "ProV_stageIII: Same as the ProV_stageII dataset."
+
+  ########## Item 5b ##########  
+  Item5b_training_Exclusion_criteria_Clinical_anlaysis: "Patients with stage III tumors were excluded."
+
+  Item5b_training_Inclusion_criteria_Clinical_anlaysis: "Patients with stage II tumors were selected."
+
+  Item5b_validation_Exclusion_criteria_Clinical_anlaysis: 
+    validation_cohort-1: "ProLT_stageIII: Patients with stage II tumors were excluded."
+
+    validation_cohort-2: "ProV_stageII: Patients with stage III tumors were excluded. Individuals from GSE14333 series who had received preoperative chemotherapy and/or radiotherapy or for whom tumor-derived total RNA was inadequate for microarray analysis (RNA integrity number [RIN] < 6) were excluded."
+
+    validation_cohort-3: "ProV_stageIII: Patients with stage II tumors were excluded. Individuals from GSE14333 series who had received preoperative chemotherapy and/or radiotherapy or for whom tumor-derived total RNA was inadequate for microarray analysis (RNA integrity number [RIN] < 6) were excluded."
+
+  Item5b_validation_Inclusion_criteria_Clinical_anlaysis: 
+    validation_cohort-1: "ProLT_stageIII: Stage III patients were selected."
+
+    validation_cohort-2: "ProV_stageII: Nonoverlapping stage II patients between GSE14333 and GSE17538 series were included."
+
+    validation_cohort-3: "ProV_stageIII: Nonoverlapping stage III patients between GSE14333 and GSE17538 series were included."
+
+  Item5b_Is_it_similar_to_the_eligibility_criteria_used_in_training_dataset: "Similar as aforementioned."
+
+  ########## Item 5c ##########  
+  Item5c_training_Received_treatments: "\\- Patients from GSE30378 series had not received adjuvant chemotherapy, which was introduced as standard treatment for patients with stage III CRC aged <75 years in Norway in 1997.
+
+  - Patients from GSE24550 had not received preoperative radiotherapy and adjuvant chemotherapy was given in accordance with Norwegian guidelines to patients with stage III colon cancer aged <75 years, or to patients with stage II disease in whom <8 lymph nodes were examined, or to patients with preoperative or intraoperative tumour perforation. Furthermore, adjuvant chemotherapy is generally only given to physically fit patients, but not to patients with rectal cancer. All underwent curative resection and no bowel perforation was reported."
+
+  Item5c_validation_Received_treatments: 
+    validation_cohort-1: "ProLT_stageIII: Same as the training dataset."
+
+    validation_cohort-2: "ProV_stageII: 
+
+    - Patients from GSE14333 series had not received preoperative chemotherapy and/or radiotherapy. Nine patients had received postoperative concurrent chemoradiotherapy (50.4 Gy in 28 fractions with concurrent 5-fluorouracil), 13 patients had only received adjuvant chemotherapy.
+
+    - 14 patients from GSE17538 had no available information about received treatments."
+
+    validation_cohort-3: "ProV_stageIII: 
+      
+    - Patients from GSE14333 series had not received preoperative chemotherapy and/or radiotherapy. 12 patients had received postoperative concurrent chemoradiotherapy (50.4 Gy in 28 fractions with concurrent 5-fluorouracil), one patient had only received adjuvant radiotherapy, 51 patients had only received adjuvant chemotherapy (either single agent 5-fluouracil/capecitabine or 5-fluouracil and oxaliplatin).
+    
+    - 19 patients from GSE17538 series had no available information about received treatments."
+
+
+Item6_Outcome:
+  Item6a_outcome: "Relapse or death from colorectal cancer was regarded as events, and patients with no events were censored. Specially, 10 years follow-up was done for the GSE30378 dataset, and 5 years follow-up was done for the GSE24550 dataset."
+  Item6a_How_and_when_assessed: "Not mentioned in this study."
+  Item6b_Actions_for_blind_assessment_of_the_outcome: "Not mentioned in this study."
+
+Item7_Predictors:
+  Item7a_Predictors_used_in_developing_the_multivariable_prediction_model: "Genome-wide expression at the exon-level for colorectal cancer tissue biopsies was analyzed using the Affymetrix Human Exon 1.0 ST platform."
+  Item7b_Actions_for_blind_assessment_of_predictors: "Not mentioned in this study."
+
+Item8_Sample_Size:
+  Item8_How_the_study_size_arrived_at: "Not mentioned in this study."
+
+Item9_Missing_Data:
+  Item9_training_Missing_value_handling: NULL
+  Item9_validation_Missing_value_handling: NULL
+
+Item10_Statistical_Analysis_Methods:
+  Item10e_Model_updating_arising_from_the_validation: NULL
+
+Item12_Development_vs_Validation:
+  Item12_Setting: "The details are described at Item 5a."
+
+  Item12_Eligibility_criteria: "The details are described at Item 5b."
+
+  Item12_Outcome: "The details are described at Item 6."
+
+  Item12_Predictors: "The mRNA expression profiles of predictors in training dataset and ProLT_stageIII dataset were generated using Affymetrix Human Exon 1.0 ST platform, while those in ProV_stageII and ProV_stageIII dataset were determined using Affymetrix Human Genome U133Plus 2.0 arrays."
+
+########## Items of results ##########
+Item13_Participants:
+  Item13a_Study_flow_diagram: NULL
+

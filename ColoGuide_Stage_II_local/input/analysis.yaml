@@ -1,0 +1,65 @@
+
+## Direcotry paths for storing input data and output result files.
+repromsig_dir: /opt/shiny-server/apps/repromsig/
+input_dir: /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/
+output_dir: /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/
+
+## Information for training and validation cohorts
+training_cohort:
+  dataset_name: ProLT_stageII
+  molecular_profile_file: ProLT_stageII.candidate_genes.expr.txt
+  patient_annotation_file: ProLT_stageII.pts_ann.csv
+  primary_site: Colorectal
+  sample_type: Primary tumor
+  molecular_profiling: Expression profiling by array
+  log_transform_type: log2
+
+validation_cohort_1:
+    dataset_name: ProLT_stageIII
+    molecular_profile_file: ProLT_stageIII.candidate_genes.expr.txt
+    patient_annotation_file: ProLT_stageIII.pts_ann.csv
+    primary_site: Colorectal
+    sample_type: Primary tumor
+    molecular_profiling: Expression profiling by array
+    log_transform_type: log2
+
+validation_cohort_2:
+    dataset_name: ProV_stageII
+    molecular_profile_file: ProV_stageII.candidate_genes.expr.txt
+    patient_annotation_file: ProV_stageII.pts_ann.csv
+    primary_site: Colorectal
+    sample_type: Primary tumor
+    molecular_profiling: Expression profiling by array
+    log_transform_type: log2
+
+validation_cohort_3:
+    dataset_name: ProV_stageIII
+    molecular_profile_file: ProV_stageIII.candidate_genes.expr.txt
+    patient_annotation_file: ProV_stageIII.pts_ann.csv
+    primary_site: Colorectal
+    sample_type: Primary tumor
+    molecular_profiling: Expression profiling by array
+    log_transform_type: log2
+
+candidate_genes_file: candidate_genes.txt
+
+## Basic parameters for signature building and evaluation
+basic_settings:
+  signature_name: ColoGuide_Stage_II_local
+  endpoint: DFS
+  time_intervals_months: [12, 36, 60]
+  variables_for_independence_test: ["MSI_status"]
+  variables_for_association_analysis: ["MSI_status"]
+  number_of_groups: 2
+  
+## Advanced parameters for experienced users to customize signature building and evaluation procedure
+advanced_settings:
+  predictor_selection: "Yes"
+  predictor_selection_method: SPCA
+  signature_generation_method: COX
+
+  bootstrap_iterations: 200
+  bootstrap_frequency: 45
+
+  variables_for_nomogram: NULL
+  method_to_stratify_patients: ReProMSig_defined
