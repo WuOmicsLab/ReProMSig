@@ -12,7 +12,7 @@ Reproducible Prognosis Molecular Signature (ReProMSig) (https://omics.bjcancer.o
 
 - Risk assessment for single patient using a developed biomarker is provided for research purpose.
 
-This repository hosts source codes of ReProMSig analysis pipeline, which can be used for local analysis. The generated signature models could also be uploaded to the [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing to public.
+This repository hosts source code of ReProMSig analysis pipeline, which can be used for local analysis. The generated signature models could also be uploaded to the [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing to public.
 
 
 ## Installation
@@ -79,7 +79,7 @@ local.rdata.generate.R | Save out the RData file that could be uploaded to the R
 ReProMSig is free for academic users of non-commercial purposes. Commercial use of ReProMSig requires a license. If ReProMSig package was used for your analysis, please cite our package.
 
 ## Contact information
-Lihua Cao (lihuacao@bjcancer.org), Tingting Zhao, Jianmin Wu (wujm@bjmu.edu.cn).
+Lihua Cao (lihuacao@bjcancer.org), Tingting Zhao(zhaott@bjmu.edu.cn), Jianmin Wu (wujm@bjmu.edu.cn).
 
 
 
