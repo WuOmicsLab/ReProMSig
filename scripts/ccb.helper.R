@@ -1,6 +1,5 @@
 # Read in and write out -----------------------------------------------------------
-# Author: Lihua cao. Create date: Feb 2020. support xlsx, csv and plain text format.
-## support xlsx, csv, maf and plain text format, if your file contain "#",please careful, and check the row and column number
+# supporting xlsx, csv, maf and plain text format, if your file contain "#",please careful, and check the row and column number
 read.file <- function(file,startRow=1,header=TRUE) {
     if(!file.exists(file)) {
         warning("File was not found!")
@@ -21,7 +20,7 @@ read.file <- function(file,startRow=1,header=TRUE) {
 }
 
 
-## support xlsx, csv, maf and plain text format
+## supporting xlsx, csv, maf and plain text format
 write.file <- function(x,file,quote=FALSE,col.names=TRUE,row.names=FALSE,sep='\t') {
     if(grepl("\\.xlsx$", file)) {
         require(openxlsx)
@@ -34,8 +33,7 @@ write.file <- function(x,file,quote=FALSE,col.names=TRUE,row.names=FALSE,sep='\t
 }
 
 
-# config ini read in Author: Yang DU. Create date: March 2020. 
-## 192 web; Modified by lihua cao.
+# for reading config ini file ---
 get_value.ccb <- function(config_file, key = NULL) {
     if(!file.exists(config_file)) {
         warning("Config ini file was not found!")
@@ -184,7 +182,6 @@ mycolumn_to_rownames <- function (.data, var = "rowname") {
     }
     .data <- as.data.frame(.data)
     rownames(.data) <- .data[[var]]
-    #.data[[var]] <- NULL
     .data
 }
 
@@ -226,9 +223,7 @@ TNM_comb.func <- function(x, group = TRUE, group1.ids = NULL, group2.ids = NULL)
 
 ## from tt
 age_gender_race_process.func <- function(df, column_ids = c("age", "gender", "ethnicity")) {
-    # df = df; column_ids = c("age", "gender", "ethnicity")
     for(x in column_ids) {
-        # x = "age"
         if(x == "ethnicity") { id0 <- which(colnames(df) %in% c("race", "ethnicity")) }
         if(x != "ethnicity") { id0 <- which(colnames(df) %in% x) }
 
@@ -390,7 +385,6 @@ stage_process.func <- function(df, column_ids = c("stage_edition", "stage")) {
 
 ## from tt
 endpoint_process.func <- function(df, column_ids = c("os", "rfs", "dfs", "dss", "pfs", "ttp")) {
-    # df = cp_df; column_ids = c("os", "rfs", "dfs", "dss", "pfs", "ttp")
     # endpoint process ----
     endpoint_events <- c()
     median_followups <- c()
@@ -405,7 +399,6 @@ endpoint_process.func <- function(df, column_ids = c("os", "rfs", "dfs", "dss", 
 
 
     for(x in column_ids) {
-        # x="os"
         id0 <- which(colnames(df) %in% c(paste0(x, "_days"), paste0(x, "_months")))
         id1 <- which(colnames(df) %in% paste0(x, "_status"))
 
@@ -503,7 +496,6 @@ spca.msig.func <- function(train.exp, sample.survival, unit=c('day','month'), ou
     colnames(surv0)[1:3] <- c("SampleID", "time", "status")
     ##
     surv0 <- surv0[!is.na(surv0$status) & !is.na(surv0$time),]
-    #rownames(surv0) <- surv0$SampleID
     mode(surv0$time) <- 'numeric'
     mode(surv0$status) <- 'numeric'
     if(unit == 'month'){ surv0$time <- surv0$time * 30 }
@@ -631,7 +623,6 @@ survival_1VS2_diffcal.fun <- function(sample.survival, pts.cluster) {
   low95 = round(exp(log(HR1) - qnorm(0.975)*sqrt(1/surv_diff$exp[2]+1/surv_diff$exp[1])),2)
   CI<-paste(round(low95, 2), round(up95, 2), sep='-')
   group<-as.vector(surv_diff$n)
-  #tempres<-data.frame(group=paste(group,collapse=";"), p=p,'HR'= HR1,check.names=F)
   tempres<-data.frame(t(data.frame(group)), p=p,'HR'= HR1,check.names=F)
   colnames(tempres)[1:length(group)] <- paste0("number", 1:length(group))
   return(tempres)
@@ -687,7 +678,6 @@ survival_1VS2_plot_multi3 <- function(sample.survival, pts.cluster, control_grou
       levs = sort(unique(x$cluster))
       levs = levs[levs!=control_group]
       in.list = lapply(levs, function(lev0){
-          # lev0 = levs[1]
           x %>% filter(cluster==control_group | cluster==lev0)
       })
       names(in.list) <- levs
@@ -695,7 +685,6 @@ survival_1VS2_plot_multi3 <- function(sample.survival, pts.cluster, control_grou
 
   ##
   p_text.list = lapply(names(in.list), function(type0) {
-    # type0 = names(in.list)[1]
     x = in.list[[type0]]
     surv_diff = survdiff(Surv(time, status)~cluster, data=x)
     ##
@@ -799,7 +788,6 @@ uni_cox.preditive <- function(pts_surv, clinic_ann, treatment_columnID = NULL) {
             ## subgroup analysis
             levs <- levels(df$x)
             cox0 <- do.call(rbind.data.frame, lapply(levs, function(lev0) {
-                # levs[1]->lev0
                 train_df0 <- df %>% filter(x == lev0) %>% select(-x)
                 train_df0[train_df0 == "NA" | train_df0 == "Unknown" | train_df0 == "[Discrepancy]"] <- NA
 
@@ -1004,7 +992,6 @@ uni_cox.prognosis <- function(pts_surv, clinic_ann) {
     variables <- colnames(train_df)[which(!colnames(train_df) %in% c('time','status'))[-1]]
     if(length(variables)>=1) {
         uni_cox_out <- lapply(variables, function(x) {
-            # variables[3] -> x
             if(length(unique(train_df[,x])) > 1) {
                     df <- train_df[,c("time", "status", x)]
                     df <- df[!is.na(df[,x]), ]
@@ -1111,7 +1098,6 @@ multi_cox.prognosis <- function(pts_surv, clinic_ann) {
     train_df <- train_df[,c('time','status',variables)]
     if(length(variables)>=2) {
         multi_cox_out <- lapply(variables, function(x) {
-            # variables[6] -> x
             train_df0 <- train_df[, unique(c('time','status', x, variables))]
             N = nrow(train_df0[!is.na(train_df0[,x]),])
             n = nrow(train_df0[!is.na(train_df0[,x]) & train_df0$status==1,])
@@ -1276,7 +1262,6 @@ forestplot.func <- function(signature_type, cox_table, continuous_variables = c(
     cox_table$summ1 <- "   "
     cox_table[(cox_table[,"HR"]==""),'summ1'] <- ""
   }
-  #cox_table[cox_table$Variable %in% c("Age","age","RS","rs","Signature Score","Signature score","Signature_score"),'summ1'] <- ""
   cox_table[cox_table$Variable %in% c(continuous_variables, c("Age","age","RS","rs","Signature Score","Signature score","Signature_score")),'summ1'] <- ""
   cox_table$Value <- paste0(cox_table$summ1,cox_table$Variable)
   colnames(cox_table)[colnames(cox_table)=="Value"] <- raw_col1
@@ -1296,8 +1281,7 @@ forestplot.func <- function(signature_type, cox_table, continuous_variables = c(
                               zero=1,            
                               boxsize=0.3,
                               graphwidth=unit(40, 'mm'),
-                              #col = fpColors(lines = "#990000", box = "#660000", zero = "darkblue"),
-                              lwd.ci = 2,#
+                              lwd.ci = 2,
                               ci.vertices =T,
                               is.summary=IS.summary,
                               hrzl_lines=list("2" = gpar(lwd=2, col="black")),
@@ -1377,7 +1361,6 @@ get.color.km = function(x){
 
     n = length(ids)
     cols = sapply(x, function(i) {
-        # i = x[1]
         i <- strsplit(i, " \\(")[[1]][1]
         id0 <- grep(i, unlist(ids))
         if(length(id0) == 0){
@@ -1426,10 +1409,8 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
     
     
     if(return_data_type){
-      #data_types <- data.frame()
 	  data_types <- data.frame(Characteristic= character(), Type= character(), stringsAsFactors=FALSE)
       for(i in char_colname){
-		#print(i)
         if(sum(is.na(cp_df[,i])) == nrow(cp_df)){
           next
         }
@@ -1441,7 +1422,6 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
 			cp_df[,i] <- as.numeric(cp_df[,i])
 		} else {
 			i_vas <- as.numeric(cp_df[,i])
-			#if(length(!is.na(i_vas)) > 0) {
 			if(length(i_vas[!is.na(i_vas)]) > 0) {
 				if(is.numeric(cp_df[,i]) & length(unique(cp_df[,i])) > 5){
 					type = "continuous"
@@ -1454,24 +1434,15 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
 			
 		}
 		#print(type)
-        #data_type=c(i,type)
 		data_type=data.frame("Characteristic"=i,"Type"=type)
 		data_types <- rbind.data.frame(data_types,data_type)
-		#print(data_type)
-        #data_types <- rbind(data_types,data_type)
-		#colnames(data_types) <- c("Characteristic","Type")
-      }
-      #data_types <- as.data.frame(data_types)
-      ##data_types <- data_types
-      #colnames(data_types) <- c("Characteristic","Type")
+    }
       return(data_types)
-      
     } else {
       
       all_rows <- c()
       
       for(i in char_colname){
-        #i="Therapy"
         if(sum(is.na(cp_df[,i])) == nrow(cp_df)){
           next
         }
@@ -1496,11 +1467,6 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
         if(type == "continuous"){
           # Age or custom col ----
           num <- length(cp_df[!is.na(cp_df$Age),i])
-          #if(i == "Age"){
-          #  all <- c("Age (year)",num,NA,NA,NA)
-          #}else{
-          #  all <- c(i,num,NA,NA,NA)
-          #}
           mean_row <- c("Mean",num,NA,mean(round(mean(cp_df[!is.na(cp_df[,i]) ,i]),0)),NA)  
           median_row <- c("Median",num,NA,median(round(mean(cp_df[!is.na(cp_df[,i]) ,i]),0)),NA)
           min_i <- min(cp_df[!is.na(cp_df[,i]),i])
@@ -1563,7 +1529,7 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
   }
 }
 
-
+##
 all_sub <- function(colname,subclass,df) {
   x <- as.data.frame(table(df[,colname]))
   if(nrow(x)==1 & x[1,"Var1"]=="NA"){
@@ -1593,6 +1559,7 @@ all_sub <- function(colname,subclass,df) {
   return(x)
 }
 
+##
 age_summary <- function(age_value) {
   age_value <- as.numeric(age_value)
   age_value <- age_value[!is.na(age_value)]
@@ -1611,6 +1578,7 @@ age_summary <- function(age_value) {
   return(age)
 } 
 
+##
 get_tripod_dataset_summary <- function(tripod_dataset_infos, user_filtered_datasets_info0, b.have.profiles, select_training_dataset, used_validation_dataset) {
   if(nrow(tripod_dataset_infos) > 0) {
     geo_url_id <- which(colnames(mtcars) %in% "geo_url")
@@ -1721,6 +1689,7 @@ excluded_sample_info <- function(df,column_name,input,title=TRUE) {
     return(excluded.samples)
   }
   
+  ##
   included_sample_info <- function(df,column_name,input,title=TRUE) {
     included.sample <- intersect(unique(df[,column_name]),input)
     included.sample[is.na(included.sample)] = "NA"
@@ -2083,7 +2052,6 @@ get_format_datatable <- function(train_valid_df_list_names, signature.type, df, 
   
   # set color
   for(i in 1:length(train_valid_df_list_names)){
-    #i =1
     i_name <- train_valid_df_list_names[i]
     
     if(analysis == "Participant characteristic"){
@@ -2580,7 +2548,9 @@ get_rowgroup_table <- function(df, coef = TRUE, have.profiles, train.profiles_ty
 ##
 
 # query selected training/validation datasets (User-filtered datasets) from user upload sqlite ----
-B_train_vali_data <- function(select_training_dataset,select_validation_dataset,userupload_sqlite_path,user_filtered_datasets_info = FALSE,filtered_datasets_type){
+B_train_vali_data <- function(select_training_dataset,select_validation_dataset,
+                              userupload_sqlite_path,user_filtered_datasets_info = FALSE,
+                              filtered_datasets_type){
   if(userupload_sqlite_path == FALSE) {
     user_filtered_sqlite <- user_filtered_datasets_info
   } else {
@@ -2612,7 +2582,6 @@ B_train_vali_data <- function(select_training_dataset,select_validation_dataset,
 tripod_datasets_summary_href <- function(df, url_colname, number_colname, urlsep = ", ", idsep = ", "){
   if(nrow(df) > 0) {
     for(i in 1:nrow(df)) {
-      #i = 4
       not_ref <- FALSE
       sub_df = df[i,]
       if(!is.na(sub_df[,url_colname]) & !is.null(sub_df[,number_colname])) {
@@ -2661,7 +2630,6 @@ tripod_datasets_summary_href <- function(df, url_colname, number_colname, urlsep
           
         } else {
           hrefs <- sapply(numbers,function(x) {
-            #x = "GSE14333 (218 in total)"
             id = which(numbers %in% x)
             url = urls[id]
             url <- url[!is.na(url)]
@@ -2707,14 +2675,7 @@ style_datasetname <- function(dataset_name,dataset_name0,dataset_style,text){
     name_col = "name0"
     combined_col = "combined0"
     change_text = TRUE
-  } 
-  #if(dataset_name[1] %in% text0){
-  #  dataset_name1 = dataset_name
-  #  name_col = "name"
-  #  combined_col = "combined"
-  #  change_text = TRUE
-  #}
-  
+  }  
   if(change_text){
     inum=0
     for(i in dataset_name1){

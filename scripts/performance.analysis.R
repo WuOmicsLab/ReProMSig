@@ -1,10 +1,3 @@
-#
-# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
-# @Author: Lihua Cao
-# @Date: 2021-05-19 17:55:54
-# @LastEditTime: 2021-12-17 17:11:02
-# @LastEditors: Lihua Cao
-# @Description: File content
 # Rscript /opt/shiny-server/apps/repromsig/scripts/performance.analysis.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini
 
 

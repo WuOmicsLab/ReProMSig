@@ -1,4 +1,4 @@
-# /home/pub/tools/R-3.6.2/bin/Rscript /opt/shiny-server/apps/repromsig_local/scripts/saveTripodReport.local.R /opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public/config.local.tripod.yaml /opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public/sig.ini /opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public//tripod.ini
+# /home/pub/tools/R-3.6.2/bin/Rscript /opt/shiny-server/apps/repromsig/scripts/tripod.report.html.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/reporting.yaml /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini
 
 
 # HEADER ------------------------------------------------------------------
@@ -12,15 +12,15 @@ ARGS_MODE = TRUE
 if(ARGS_MODE) {
   args<-commandArgs(TRUE)
   if(length(args)!=3) {
-    stop("Usage: Rscript saveTripodReport.local.R [config.yaml.file] [user.config.ini.file] [tripod.ini.file]\n")
+    stop("Usage: Rscript tripod.report.html.R [reporting.yaml.file] [user.config.ini.file] [tripod.ini.file]\n")
   }
-  config.yaml.file <- args[1]
+  reporting.yaml.file <- args[1]
   user.config.ini.file <- args[2]
   tripod.ini.file <- args[3]
 } else {
-  config.yaml.file <- "/opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public/config.local.tripod.yaml"
-  user.config.ini.file <- "/opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public/sig.ini"
-  tripod.ini.file <- "/opt/shiny-server/apps/repromsig_local/example/ColoGuide_Stage_II_public//tripod.ini"
+  reporting.yaml.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/reporting.yaml"
+  user.config.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini"
+  tripod.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini"
 }
 
 
@@ -73,10 +73,9 @@ user_uploaded_anno.rdata <- get_value.ccb(config_file = user.config.ini.file, ke
 b.user.sig.path <- get_value.ccb(config_file = user.config.ini.file, key = 'b_user_sig_path')[[1]]
 
 # readin and preprocess ---------------------------
-conf <- read_yaml(config.yaml.file)
+conf <- read_yaml(reporting.yaml.file)
 
 # source functions ---
-#source(paste0(script.dir, "/global.R"))
 source(paste0(script.dir, "/ccb.helper.R"))
 js_dir = paste0(repromsig.dir, "/config/")
 
@@ -144,11 +143,7 @@ table_surv_prob_rdata <- gsub(" ","",table_surv_prob_rdata)
 user_tripod_rdata <- get_value_tripod.ccb(config_file = tripod.ini.file, key = 'user_tripod_rdata')[[1]]
 
 user_tripod_rdata <- gsub(" ","", user_tripod_rdata)
-<<<<<<< HEAD
 add_info_tripod_rdata <- paste0(b.user.sig.path,"/rda/add_info_tripod.RData")
-=======
-add_info_tripod_rdata <- paste0(b.user.sig.path,"/add_info_tripod.RData")
->>>>>>> 3dc569cd21c0c82ae09bf287b4437ef46eb3b30d
 
 # load data ----
 load(user.filtered.datasets.rdata)
@@ -184,7 +179,6 @@ if(nrow(coef1) > 0) {
   
   ##
   train_df <- train.cp.raw
-  #train_df[train_df=="NA"] <- NA
   local_molecular_profiling <- sort(unique(train_df$Molecular_profiling))
   local_min_age <- min(train_df$Age)
   local_max_age <- max(train_df$Age)
@@ -378,13 +372,11 @@ if(nrow(coef1) > 0) {
   tripod_dataset_infos <- data.frame()
   ids <- names(conf$Signature_summary)[-which(names(conf$Signature_summary) %in% "Signature_description")]
   nullToNA <- function(x) { 
-    #x[sapply(x, is.null)] <- NA 
     x[is.null(x)] <- NA
     return(x) 
   } 
   
   for(x in ids) {
-    # x = ids[1]
     list0 <- conf$Signature_summary[[x]]
     name0 <- list0$dataset_name
     ##
@@ -1614,7 +1606,6 @@ if(nrow(coef1) > 0) {
   resave(local_sig_df, file = add_info_tripod_rdata)
   
   # download tripod -------------------------------------------------------
-  #file = paste0(b.name.sig.id,"_report",Sys.Date(),".html")
   dir.create(paste0(b.user.sig.path, "/upload/"))
   file <- paste0(b.user.sig.path, "/upload/", b.name.sig.id, "_report", Sys.Date(), ".html")
   src <- ifelse(b.have.profiles == "Yes",
@@ -1634,10 +1625,8 @@ if(nrow(coef1) > 0) {
   out <- render(rmd.file, html_document())
   
   file.rename(out, file)
-  #file.copy(file, paste0(b.user.sig.path, "tripod/"), overwrite = TRUE)
   
   if(file.exists(file)) {
-    #if(file.exists(paste0(b.user.sig.path,"tripod/", file))) {
     print(paste0("Output created: ", file))
   }
 } else {

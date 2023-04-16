@@ -1,10 +1,3 @@
-#
-# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
-# @Author: Lihua Cao
-# @Date: 2021-11-29 10:26:15
-# @LastEditTime: 2021-12-20 17:55:03
-# @LastEditors: Lihua Cao
-# @Description: File content
 # Rscript /opt/shiny-server/apps/repromsig/scripts/model.analysis.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini
 
 # HEADER ------------------------------------------------------------------
@@ -56,8 +49,6 @@ get_value.ccb <- function(config_file, key = NULL) {
 }
 
 script.dir <- get_value.ccb(config_file = user.config.ini.file,  key = 'script_dir')[[1]]
-#public_exp_path <- get_value.ccb(config_file = user.config.ini.file,  key = 'public_exp_path')[[1]]
-#public_cp_sqlite_path <- get_value.ccb(config_file = user.config.ini.file,  key = 'public_cp_sqlite')[[1]]
 user_filtered_datasets.rdata <- get_value.ccb(config_file = user.config.ini.file,  key = 'user_filtered_datasets_rdata')[[1]]
 user_uploaded_anno.rdata <- get_value.ccb(config_file = user.config.ini.file,  key = 'user_uploaded_anno_rdata')[[1]]
 user_parameters.rdata <- get_value.ccb(config_file = user.config.ini.file,  key = 'user_parameters_rdata')[[1]]
@@ -69,9 +60,7 @@ source(paste0(script.dir,'ccb.helper.R'))
 load(user_filtered_datasets.rdata)
 # cgwtools::lsdata(user_filtered_datasets.rdata)
 load(user_parameters.rdata)
-# cgwtools::lsdata(user_parameters.rdata)
 print(c(select_training_dataset, select_validation_dataset))
-# user_path <- dirname(dirname(b.user.sig.path))
 user_path <- b.user.sig.path
 
 # load public exp/cp data ------------------------------------------------------------------
@@ -94,7 +83,6 @@ u_exp_list = list()
 u_exp_list_ids = c()
 
 for (i in 1:nrow(user_filtered_datasets_info)) {
-    # i = 1
 	df <- user_filtered_datasets_info[i, ]
 	samid <- strsplit(df$sample_id, ",")[[1]]
 
@@ -254,7 +242,6 @@ valid.cp.list <- list()
 
 if(length(select_validation_dataset) >= 1) {
 	for(i in 1:length(select_validation_dataset)) {
-        # i = 2
 		x <- select_validation_dataset[i]
 		cp.name <- user_filtered_datasets_info %>%
                          filter(dataset_name == x) %>%
@@ -453,7 +440,6 @@ if(b.have.profiles == "Yes" & combat) {
         debug(train0, 5)
 
         valid.exp.list.combat <- lapply(names(valid.exp.list), function(data_name) {
-            # names(valid.exp.list)[1]->data_name
             exp_df <- valid.exp.list[[data_name]] %>%
                                 set_names("Symbol", colnames(.)[-1]) %>%
                                 tibble %>% mycolumn_to_rownames("Symbol")
@@ -553,7 +539,6 @@ if(b.have.profiles == "Yes") { c_preds_unicox <- c_preds_unicox %>% select("Raw 
 
 
 ## save key variables ------------------------------------------
-#b.cutpoint.method = "X-tile" , b.method, b.predictive.treatment, b.predictive.treatment
 save_out = TRUE
 if(save_out) {
     if(b.group == "2 groups") {
@@ -585,7 +570,6 @@ if(save_out) {
 ## modeling ------------------------------------------
 ## feature selection ---
 boot_n <- b.bootstrap.iterations
-# boot_n <- 10
 boot_freq <- b.bootstrap.frequency/100
 lambda <- ""
 coef_lasso_raw <- data.frame()
@@ -1089,7 +1073,6 @@ if(nrow(coef1) > 0) {
             clust_column <- ifelse(type == "Training dataset", "Type", "Treatment_type")
 
             Stat <- lapply(variables, function(x) {
-                # variables[1] -> x 
                 rs0 <- cp_rs0[, c(clust_column, x)]
                 rs0 <- rs0[!is.na(rs0[,1]) & !is.na(rs0[,2]), ]
                 rs0[is.na(rs0)] <- "Unknown"

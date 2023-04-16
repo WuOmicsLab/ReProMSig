@@ -62,6 +62,17 @@ if(is.null(conf$training_cohort$patient_annotation_file)) {
     stop("The patient_annotation_file for training cohort is missing in yaml file.")
 }
 
+if(!is.null(conf$training_cohort$molecular_profile_file)) {
+    molecluar_profiles_included = b.have.profiles = "Yes"
+} else {
+    molecluar_profiles_included = b.have.profiles = NULL
+}
+
+if(!is.null(conf$training_cohort$molecular_profile_file) & is.null(conf$training_cohort$molecular_profiling)) {
+    stop("The molecular_profiling (Molecular Assay Platform) for training cohort is missing in yaml file.")
+}
+
+
 ## for private datasets, generate the user_uploaded_list of User_uploaded_anno.RData
 # and save the expr matrix to rdata file ------------------------------------------------------
 is_primary_treatment <- "Yes"
@@ -74,16 +85,18 @@ z = 1
 sr <- "Private dataset"
 
 for(x in ids) {
-    # x = ids[1]
     list0 <- conf[[x]]
     name0 <- list0$dataset_name
     ##
     primary_site <- capitalize(tolower(list0$primary_site))
-    meta_infor <- data.frame(name0, primary_site, list0$sample_type, 
-                             list0$molecular_profiling, list0$log_transform_type,
-                             is_primary_treatment, source
-                            )
-    user_filtered_datasets_info <- rbind(user_filtered_datasets_info, meta_infor)
+    profile_platform <- list0$molecular_profiling
+    profile_platform <- ifelse(is.null(profile_platform), NA, profile_platform)
+    meta_infor1 <- data.frame(name0, primary_site, list0$sample_type, 
+                              profile_platform, list0$log_transform_type,
+                              is_primary_treatment, source
+                             )         
+    user_filtered_datasets_info <- rbind(user_filtered_datasets_info, meta_infor1)
+
 
     # Only keep datasets with patient_annotation_file
     if((sr == "Private dataset" & !is.null(list0$patient_annotation_file))) {
@@ -96,9 +109,6 @@ for(x in ids) {
             }
 
             dir.create(paste0(b.user.sig.path, "/rda/"))
-            #expr <- expr %>% filter(Symbol %in% b.upload.predictors[, 1])
-            #file0 <- paste0(in.dir, "/", name0, ".candidate_genes.expr.txt")
-            #write.file(expr, file0)
             save(expr, file = paste0(b.user.sig.path, "/rda/", name0, "_exp.RData"))
         }
 
@@ -127,12 +137,12 @@ colnames(user_filtered_datasets_info) <- c("dataset_name", "primary_site", "samp
                                            "is_primary_treatment", "source")
 
 
+
 # preprocessing the patient_annotation_file for each valid cohort (user_uploaded_list) ------
 user_uploaded_list_2 <- list()
 meta_infor <- data.frame()
 z=1
 for(d_name in names(user_uploaded_list)) {
-    # d_name = names(user_uploaded_list)[1]
     print(paste0(d_name," dataset starts processing ..."))
     cp_df <- user_uploaded_list[[d_name]]
 
@@ -448,6 +458,7 @@ user_uploaded_list <- user_uploaded_list_2
 save(user_uploaded_list, file = paste0(b.user.sig.path, "/rda/User_uploaded_anno.RData"))
 
 
+
 ##
 colnames(meta_infor) <- c("dataset_id", "dataset_name", "numberpts",
                           "primary_site", "disease_type", "sample_type",
@@ -457,6 +468,7 @@ colnames(meta_infor) <- c("dataset_id", "dataset_name", "numberpts",
                           "endpoint", "median_followup",
                           "age", "gender", "ethnicity", "t", "n", "m", 
                           "stage_edition", "stage", "custom", "sample_id")
+                          
 ##
 meta_infor_add <- meta_infor %>% select(dataset_id, dataset_name, numberpts, disease_type,
                       clinicopathological_info_rdata_variable_name,
@@ -476,7 +488,6 @@ conf_basic_paras <- conf$basic_settings
 paras <- sort(names(conf_basic_paras))
 conf_basic_paras <- conf_basic_paras[paras]
 signature_type = b.signature.type = "Prognostic"
-molecluar_profiles_included = b.have.profiles = "Yes"
 
 id_map <- c(signature_name = "b.name.sig", 
             endpoint = "b.endpoint", time_intervals_months = "b.times",
@@ -496,20 +507,15 @@ adv_default <- list(predictor_selection = "Yes", predictor_selection_method = "S
                     bootstrap_iterations = 200, bootstrap_frequency = 45, batch_correction = NULL,
                     signature_generation_method = "COX", method_to_stratify_patients = "Percentile",
                     number_of_groups = 2, "2groups_high_percentile" = 50, "2groups_low_percentile" = 50, 
-<<<<<<< HEAD
-                    "3groups_high_percentile" = 75, "3groups_moderate_percentile" = as.integer(c(25, 75)), 
-=======
-                    "3groups_high_percentile" = 75, "3groups_moderate_percentile" = "[25, 75]", 
->>>>>>> 3dc569cd21c0c82ae09bf287b4437ef46eb3b30d
+                    "3groups_high_percentile" = 75, "3groups_moderate_percentile" = c(25, 75), 
                     "3groups_low_percentile" = 25, variables_for_subgroup_Kaplan_Meier_analysis = NULL, 
                     combine_age_cutoff = NULL, combine_stage_category1 = NULL, combine_stage_category2 = NULL,
                     combine_N_category1 = NULL, combine_N_category2 = NULL, combine_T_category1 = NULL, combine_T_category2 = NULL,
                     variables_for_nomogram = NULL, candidate_predictors_for_signature_wout_molecular_data = NULL,
-                    patients_used_for_predictive_signature = NULL, variables_for_interaction_test = NULL,
+                    patients_used_for_predictive_signature = NULL, variables_for_interaction_ColoGuide_Stage_II_local = NULL,
                     control_regimen = NULL, control_treatment_setting = NULL, control_treatment_type = NULL, 
                     treatment_regimen = NULL, treatment_treatment_setting = NULL, treatment_treatment_type = NULL)
 ##
-
 if("advanced_settings" %in% names(conf)) {
     conf_adv_paras <- conf$advanced_settings
 } else {
@@ -532,7 +538,7 @@ id_map <- c("b.predictor.selection","b.predictor.selection.methods",
             "b.subgroup.variable","b.combine.age","b.combine.stage1","b.combine.stage2",
             "b.combine.n1","b.combine.n2","b.combine.t1","b.combine.t2",
             "b.nomogram.variables", "b.clinicopathological.predictors",
-            "b.predictive.modeling.data","b.interaction.test",
+            "b.predictive.modeling.data","b.interaction.ColoGuide_Stage_II_local",
             "b.control.regimen","b.control.treatment.setting","b.control.treatment.type",
             "b.treatment.regimen","b.treatment.treatment.setting","b.treatment.treatment.type")
 
@@ -547,7 +553,7 @@ names(id_map) <- c("predictor_selection","predictor_selection_method",
                    "combine_N_category1","combine_N_category2","combine_T_category1","combine_T_category2",
                    "variables_for_nomogram", "candidate_predictors_for_signature_wout_molecular_data",
 
-                   "patients_used_for_predictive_signature","variables_for_interaction_test",
+                   "patients_used_for_predictive_signature","variables_for_interaction_ColoGuide_Stage_II_local",
                    "control_regimen","control_treatment_setting","control_treatment_type",
                    "treatment_regimen","treatment_treatment_setting","treatment_treatment_type")
 
@@ -615,7 +621,7 @@ save(b.user.sig.path, b.primary.site, b.sample.type,
      b.cutpoint.method, b.group, b.high2, b.low2,
      b.high3, b.moderate3, b.low3,
 
-     b.predictive.modeling.data, b.interaction.test,
+     b.predictive.modeling.data, b.interaction.ColoGuide_Stage_II_local,
      b.control.regimen, b.control.treatment.setting, b.control.treatment.type,
      b.treatment.regimen, b.treatment.treatment.setting, b.treatment.treatment.type,
 
@@ -627,12 +633,10 @@ save(b.user.sig.path, b.primary.site, b.sample.type,
 user.config.ini.file <- paste0(b.user.sig.path, "/", "sig.ini")
 section <- "Building_signature"
 keys <- c("user_filtered_datasets_rdata", "user_uploaded_anno_rdata", "user_parameters_rdata",
-          #"public_exp_path", "public_cp_sqlite_path", 
           "script_dir", "repromsig_dir", "b_user_sig_path")
 values <- c(paste0(b.user.sig.path, "/rda/User_filtered_datasets.RData"),
             paste0(b.user.sig.path, "/rda/User_uploaded_anno.RData"),
             paste0(b.user.sig.path, "/rda/User_parameters.RData"),
-            #public_exp_path, public_cp_sqlite,
             script.dir, repromsig.dir, b.user.sig.path)
 
 for(i in 1:length(keys)) {
