@@ -50,7 +50,7 @@ Molecular profile file is a feature-by-sample matrix in TXT/CSV/Excel format. Fe
 
 ## Usages 
 ```bash
-# The main function is repromsig.sh, which takes two aforementioned yaml files as input. 
+# The portal script is repromsig.sh, which takes two aforementioned yaml files as input. 
 bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
 
 # running example project
