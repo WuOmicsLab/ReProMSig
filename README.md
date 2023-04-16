@@ -62,7 +62,7 @@ This analysis will create multiple result folders containing output RData files,
 <b>Note</b>: The RData file and Reporting html file in the <b>upload</b> sub-directory are the main output files that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
 
 ## Script details
-`repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, see below for details:
+`repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, as shown below:
 
 Script |Description
 :-|:-
