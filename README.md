@@ -34,7 +34,7 @@ pip install shyaml
 The portal script `repromsig.sh` takes two config files in YAML format as input. User need to provide clinicopathological and/or molecular profiles that will be used as training and validation cohort(s).
 
 ####  1) Config file for analysis (YAML format)
-This YAML file consists of data path and analysis parameters. Please see `ColoGuide_Stage_II_local/input/analysis.yaml` for an example and config/analysis.default.setting.yaml for a complete list of configurations.
+This YAML file consists of data path and analysis parameters. Please see `ColoGuide_Stage_II_local/input/analysis.yaml` for an example and `config/analysis.default.setting.yaml` for a complete list of configurations.
 
 ####  2) Config file for reporting (YAML format)
 This YAML file consists of structured information needed for generating the reporting file of a developed siganture, according to the [TRIPOD guideline](https://www.tripod-statement.org/). Please see `ColoGuide_Stage_II_local/input/reporting.yaml` for an example.
