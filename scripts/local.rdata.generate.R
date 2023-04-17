@@ -1,4 +1,4 @@
-# Rscript /opt/shiny-server/apps/repromsig/scripts/local.rdata.generate.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini
+# Rscript scripts/local.rdata.generate.R ColoGuide_Stage_II_local/output/sig.ini ColoGuide_Stage_II_local/output/tripod.ini
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
@@ -16,8 +16,8 @@ if(ARGS_MODE) {
   user.config.ini.file <- args[1]
   tripod.ini.file <- args[2]
 } else {
-  user.config.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini"
-  tripod.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini"
+  user.config.ini.file <- "ColoGuide_Stage_II_local/output/sig.ini"
+  tripod.ini.file <- "ColoGuide_Stage_II_local/output/tripod.ini"
 }
 
 # 2) Library

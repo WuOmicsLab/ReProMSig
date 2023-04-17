@@ -1,9 +1,7 @@
-# sh /opt/shiny-server/apps/repromsig/scripts/repromsig.sh /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/analysis.yaml /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/reporting.yaml
-
+# bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml ColoGuide_Stage_II_local/input/reporting.yaml
 
 #!/usr/bin/bash
 # parameters
-## input parameters
 if [ $# != 2 ] ; then 
     echo "Parameters: repromsig.sh analysis.yaml reporting.yaml"
     exit 1; 
@@ -12,22 +10,27 @@ fi
 config_yaml_file=$1
 config_report_yaml_file=$2
 
-## get file/path from config.yaml ------------------
-# need to pip install shyaml
-repromsig_dir=$(cat $config_yaml_file | shyaml get-value repromsig_dir)
-buiding_sig_dir=$(cat $config_yaml_file | shyaml get-value output_dir)
-scirpt_dir=${repromsig_dir}/scripts/
-echo $scirpt_dir
+## get file/path from config.yaml, need to pip install shyaml------------------
+scirpt_dir=$(cd `dirname $0`; pwd)
+repromsig_dir=$(dirname $scirpt_dir)
+echo $repromsig_dir
 
+##
+buiding_sig_dir=$(cat $config_yaml_file | shyaml get-value output_dir)
 if [ ! -d $buiding_sig_dir ];then
-        mkdir -p $buiding_sig_dir
+    mkdir -p $buiding_sig_dir
 fi
+##
+basename=$(basename $buiding_sig_dir)
+buiding_sig_dir=$(cd `dirname $buiding_sig_dir`; pwd)
+buiding_sig_dir=$buiding_sig_dir/$basename/
+echo $buiding_sig_dir
+
 
 ## run the analysis codes ------------------
-cd $buiding_sig_dir
-
+cd $repromsig_dir
 ## step0 
-Rscript $scirpt_dir/yaml.process.R $config_yaml_file
+Rscript $scirpt_dir/yaml.process.R $config_yaml_file $repromsig_dir
 
 ## step1 Construct model to obtain signature ---
 Rscript $scirpt_dir/model.analysis.R $buiding_sig_dir/sig.ini

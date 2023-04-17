@@ -1,4 +1,4 @@
-# Rscript /opt/shiny-server/apps/repromsig/scripts/KM.evaluate.analysis.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini
+# Rscript scripts/KM.evaluate.analysis.R ColoGuide_Stage_II_local/output/sig.ini
 
 
 # HEADER ------------------------------------------------------------------
@@ -12,11 +12,11 @@ ARGS_MODE <- TRUE
 if(ARGS_MODE) {
 	args<-commandArgs(TRUE)
 	if(length(args)!=1) {
-		stop("Usage: Rscript independence.analysis.R [user.config.ini.file]\n")
+		stop("Usage: Rscript KM.evaluate.analysis.R [user.config.ini.file]\n")
 	}
 	user.config.ini.file <- args[1]
 } else {
-	user.config.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini"
+	user.config.ini.file <- "ColoGuide_Stage_II_local/output/sig.ini"
 }
 
 # 2) Library

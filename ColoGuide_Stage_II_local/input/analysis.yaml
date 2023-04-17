@@ -1,8 +1,7 @@
 
 ## Direcotry paths for storing input data and output result files.
-repromsig_dir: /opt/shiny-server/apps/repromsig/
-input_dir: /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/
-output_dir: /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/
+input_dir: ColoGuide_Stage_II_local/input/
+output_dir: ColoGuide_Stage_II_local/output/
 
 ## Information for training and validation cohorts
 training_cohort:

@@ -1,4 +1,4 @@
-# /home/pub/tools/R-3.6.2/bin/Rscript /opt/shiny-server/apps/repromsig/scripts/yaml.process.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/analysis.yaml
+# Rscript scripts/yaml.process.R ColoGuide_Stage_II_local/input/analysis.yaml /opt/shiny-server/apps/repromsig_0417/
 
 
 # HEADER ------------------------------------------------------------------ 
@@ -11,12 +11,14 @@ ARGS_MODE = TRUE
 # 1) Parameters
 if(ARGS_MODE) {
 	args<-commandArgs(TRUE)
-	if(length(args)!=1) {
-		stop("Usage: Rscript yaml.process.R [analysis.yaml]\n")
+	if(length(args)!=2) {
+		stop("Usage: Rscript yaml.process.R [analysis.yaml] [repromsig_dir]\n")
 	}
 	analysis.yaml.file <- args[1]
+    repromsig_dir <- args[2]
 } else {
-    analysis.yaml.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/analysis.yaml"
+    analysis.yaml.file <- "ColoGuide_Stage_II_local/input/analysis.yaml"
+    repromsig_dir <- "/opt/shiny-server/apps/repromsig/"
 }
 
 # 2) Library
@@ -27,27 +29,34 @@ library(survival)
 library(survminer)
 
 # readin and preprocess  ---------------------------
+analysis.yaml.file <- tools::file_path_as_absolute(analysis.yaml.file)
 conf <- read_yaml(analysis.yaml.file)
 
 # source functions ---
-repromsig.dir <- conf$repromsig_dir
+repromsig.dir <- repromsig_dir
+repromsig.dir <- ifelse(is.null(repromsig.dir), getwd(), repromsig.dir)
+repromsig.dir <- paste0(repromsig.dir, "/")
 script.dir <- paste0(repromsig.dir, "/scripts/")
 source(paste0(script.dir,'ccb.helper.R'))
 
-
 ## indir, outdir and paths for public datasets ---
+mysetwd(repromsig.dir)
 in.dir <- conf$input_dir
+in.dir <- tools::file_path_as_absolute(in.dir)
+
+##
 b.user.sig.path <- conf$output_dir
-mysetwd(b.user.sig.path)
-mysetwd(in.dir)
+dir.create(b.user.sig.path)
+b.user.sig.path <- tools::file_path_as_absolute(b.user.sig.path)
 
 ## generate user_filtered_datasets_info (a data frame) of User_filtered_datasets.RData ------------------------------------------------------
-b.upload.predictors <- read.file(conf$candidate_genes_file)
-
+b.upload.predictors <- read.file(paste0(in.dir, "/", conf$candidate_genes_file))
 user_filtered_datasets_info <- data.frame()
 
 
 # Check training and validation dataset(s) ------------------------------------------------------
+mysetwd(repromsig.dir)
+
 if(is.null(conf$training_cohort$dataset_name)) {
     stop("The dataset name of training cohort is missing in the yaml file.")
 }
@@ -85,6 +94,7 @@ z = 1
 sr <- "Private dataset"
 
 for(x in ids) {
+    # x = ids[1]
     list0 <- conf[[x]]
     name0 <- list0$dataset_name
     ##
@@ -101,20 +111,20 @@ for(x in ids) {
     # Only keep datasets with patient_annotation_file
     if((sr == "Private dataset" & !is.null(list0$patient_annotation_file))) {
         if(!is.null(list0$molecular_profile_file)) {
-            if(file.exists(list0$molecular_profile_file)) {
-                expr <- read.file(list0$molecular_profile_file)
+            expr.file <- paste0(in.dir, "/", list0$molecular_profile_file)
+            if(file.exists(expr.file)) {
+                expr <- read.file(expr.file)
             } else {
                 expr <- data.frame()
-                Warning(paste0("The molecular_profile_file: ", list0$molecular_profile_file, " for training cohort was not found."))
+                warning(paste0("The molecular_profile_file: ", list0$molecular_profile_file, " for training cohort was not found."))
             }
-
+            
             dir.create(paste0(b.user.sig.path, "/rda/"))
             save(expr, file = paste0(b.user.sig.path, "/rda/", name0, "_exp.RData"))
         }
 
         ## cp table 
-        pts_ann <- read.file(list0$patient_annotation_file)
-
+        pts_ann <- read.file(paste0(in.dir, "/", list0$patient_annotation_file))
 
         user_uploaded_list[[z]] <- pts_ann
         data_ids <- c(data_ids, name0)

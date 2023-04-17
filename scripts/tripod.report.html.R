@@ -1,4 +1,4 @@
-# /home/pub/tools/R-3.6.2/bin/Rscript /opt/shiny-server/apps/repromsig/scripts/tripod.report.html.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/reporting.yaml /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini
+# Rscript scripts/tripod.report.html.R ColoGuide_Stage_II_local/input/reporting.yaml ColoGuide_Stage_II_local/output/sig.ini ColoGuide_Stage_II_local/output/tripod.ini
 
 
 # HEADER ------------------------------------------------------------------
@@ -18,9 +18,9 @@ if(ARGS_MODE) {
   user.config.ini.file <- args[2]
   tripod.ini.file <- args[3]
 } else {
-  reporting.yaml.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/input/reporting.yaml"
-  user.config.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini"
-  tripod.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/tripod.ini"
+  reporting.yaml.file <- "ColoGuide_Stage_II_local/input/reporting.yaml"
+  user.config.ini.file <- "ColoGuide_Stage_II_local/output/sig.ini"
+  tripod.ini.file <- "ColoGuide_Stage_II_local/output/tripod.ini"
 }
 
 
@@ -59,7 +59,7 @@ get_value.ccb <- function(config_file, key = NULL) {
 getValidationValues <- function(yaml_key1,yaml_key2) {
   value <- unique(c(conf[[yaml_key1]][[yaml_key2]]$`validation_cohort-1`,conf[[yaml_key1]][[yaml_key2]]$`validation_cohort-2`,conf[[yaml_key1]][[yaml_key2]]$`validation_cohort-3`))
   if(!is.null(value)){
-    value <- gsub("\n","<br />",value) 
+    value <- gsub("\n"," <br />", value) 
     value <- paste0(value,collapse = "<br /><br /> ")
   } 
   return(value)

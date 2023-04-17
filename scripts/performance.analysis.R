@@ -1,4 +1,4 @@
-# Rscript /opt/shiny-server/apps/repromsig/scripts/performance.analysis.R /opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini
+# Rscript scripts/performance.analysis.R ColoGuide_Stage_II_local/output/sig.ini
 
 
 # HEADER ------------------------------------------------------------------
@@ -16,7 +16,7 @@ if(ARGS_MODE) {
 	}
 	user.config.ini.file <- args[1]
 } else {
-	user.config.ini.file <- "/opt/shiny-server/apps/repromsig/ColoGuide_Stage_II_local/output/sig.ini"
+	user.config.ini.file <- "ColoGuide_Stage_II_local/output/sig.ini"
 }
 
 # 2) Library
