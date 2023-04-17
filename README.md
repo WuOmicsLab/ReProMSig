@@ -51,16 +51,16 @@ Molecular profile file is a feature-by-sample matrix in TXT/CSV/Excel format. Fe
 ## Usages 
 ```bash
 # The portal script is repromsig.sh, which takes two aforementioned yaml files as input. 
-bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
+bash scripts/repromsig.sh [analysis.yaml] [reporting.yaml]
 
-# running example project
+# Running an example project
 bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuide_Stage_II_local/input/reporting.yaml
 ```
 
 This analysis will create multiple output sub-folders, including information extracted from analysis.yaml file (`rda` dir), output files from signature modelling (`model`dir), independence test (`independence` dir), discrimination and calibration  evaluation (`performance` dir), survival differences inspection between risk groups (`external_evaluate` dir), summary tables and figures  for TRIPOD reporting (`tripod` dir) and the RData file and reporting html file (<b>`upload`</b> dir) that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
 
 ## Script details
-`repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, as shown below:
+`repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modelling and reporting, as shown below:
 
 Script |Description
 :-|:-
