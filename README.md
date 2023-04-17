@@ -57,9 +57,7 @@ bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
 bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuide_Stage_II_local/input/reporting.yaml
 ```
 
-This analysis will create multiple result folders containing output RData files, tables and plots described here.
-
-<b>Note</b>: The RData file and Reporting html file in the <b>upload</b> sub-directory are the main output files that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
+This analysis will create multiple result folders, including information extracted from analysis.yaml file (`rda` dir), output files from signature modelling (`model `dir), independence test (`independence` dir), discrimination and calibration  evaluation (`performance` dir), survival differences inspection between risk groups (`external_evaluate` dir), summary tables and figures  for TRIPOD reporting (`tripod` dir) and the integrated RData file and reporting html file (<b>`upload`</b> dir) that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
 
 ## Script details
 `repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, as shown below:
