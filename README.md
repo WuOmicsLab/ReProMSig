@@ -18,10 +18,10 @@ This repository hosts source code of ReProMSig analysis pipeline, which can be u
 ## Installation
 System requirements: <b>R >= 3.6.1</b> and <b>Python</b>.
 
-1) Run the installiation script to install the required packages automatically before using the pipeline. $(pwd) referes to the ReProMSig direcotry path.
+1) Run the installiation script to install the required packages automatically before using the pipeline.
 
 ```bash
-Rscript $(pwd)/package.install.R
+Rscript scripts/package.install.R
 ```
 
 2) Install [shyaml](https://github.com/0k/shyaml) package for processing user provided config files (YAML format).
@@ -57,7 +57,7 @@ bash scripts/repromsig.sh $analysis.yaml $reporting.yaml
 bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml  ColoGuide_Stage_II_local/input/reporting.yaml
 ```
 
-This analysis will create multiple result folders, including information extracted from analysis.yaml file (`rda` dir), output files from signature modelling (`model `dir), independence test (`independence` dir), discrimination and calibration  evaluation (`performance` dir), survival differences inspection between risk groups (`external_evaluate` dir), summary tables and figures  for TRIPOD reporting (`tripod` dir) and the integrated RData file and reporting html file (<b>`upload`</b> dir) that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
+This analysis will create multiple output sub-folders, including information extracted from analysis.yaml file (`rda` dir), output files from signature modelling (`model`dir), independence test (`independence` dir), discrimination and calibration  evaluation (`performance` dir), survival differences inspection between risk groups (`external_evaluate` dir), summary tables and figures  for TRIPOD reporting (`tripod` dir) and the RData file and reporting html file (<b>`upload`</b> dir) that could be uploaded to "My signature" module of [ReProMSig web server](https://omics.bjcancer.org/prognosis/) for sharing.
 
 ## Script details
 `repromsig.sh` utilizes multiple scripts to perform data processing, extracting, modeling and reporting, as shown below:
