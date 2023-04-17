@@ -17,8 +17,8 @@ if(ARGS_MODE) {
 	analysis.yaml.file <- args[1]
     repromsig_dir <- args[2]
 } else {
-    analysis.yaml.file <- "ColoGuide_Stage_II_local/input/analysis.yaml"
-    repromsig_dir <- "/opt/shiny-server/apps/repromsig/"
+    analysis.yaml.file <- "/mnt/dellfs/projects/ReProMSig-main/ColoGuide_Stage_II_local/input/analysis.yaml"
+    repromsig_dir <- "/mnt/dellfs/projects/ReProMSig-main/"
 }
 
 # 2) Library
@@ -514,7 +514,7 @@ for(x in names(conf_basic_paras)) { assign(x, conf_basic_paras[[x]]) }
 
 # advanced parameters ---
 adv_default <- list(predictor_selection = "Yes", predictor_selection_method = "SPCA",
-                    bootstrap_iterations = 200, bootstrap_frequency = 45, batch_correction = NULL,
+                    bootstrap_iterations = 200, bootstrap_frequency = 45, batch_correction = FALSE,
                     signature_generation_method = "COX", method_to_stratify_patients = "Percentile",
                     number_of_groups = 2, "2groups_high_percentile" = 50, "2groups_low_percentile" = 50, 
                     "3groups_high_percentile" = 75, "3groups_moderate_percentile" = c(25, 75), 
@@ -573,6 +573,7 @@ names(conf_adv_paras) <- id_map[paras]
 
 
 for(x in names(conf_adv_paras)) {
+    # x = batch_correction
     if(x == "b.cutpoint.method") {
         y <- conf_adv_paras[[x]]
         y <- gsub("ReProMSig_defined", "X-tile", y)
@@ -595,6 +596,10 @@ for(x in names(conf_adv_paras)) {
             LASSO_cox <- TRUE
             standard_cox <- FALSE
         }
+    } else if(x == "b.batch.correction") {
+        y <- conf_adv_paras[[x]]
+        if(y) { b.batch.correction <- "ComBat" }
+        if(!y) { b.batch.correction <- NULL }
     } else {
         assign(x, conf_adv_paras[[x]])
     }

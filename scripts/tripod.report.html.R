@@ -1607,7 +1607,7 @@ if(nrow(coef1) > 0) {
   
   # download tripod -------------------------------------------------------
   dir.create(paste0(b.user.sig.path, "/upload/"))
-  file <- paste0(b.user.sig.path, "/upload/", b.name.sig.id, "_report", Sys.Date(), ".html")
+  file <- paste0(b.user.sig.path, "/upload/", b.name.sig.id, ".", Sys.Date(), ".report.html")
   src <- ifelse(b.have.profiles == "Yes",
                 normalizePath(paste0(script.dir,"/rmarkdown_exp.Rmd")),
                 normalizePath(paste0(script.dir,"/rmarkdown_noexp.Rmd")))

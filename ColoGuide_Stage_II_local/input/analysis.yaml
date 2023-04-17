@@ -60,5 +60,6 @@ advanced_settings:
   bootstrap_iterations: 200
   bootstrap_frequency: 45
 
+  batch_correction: TRUE
   variables_for_nomogram: NULL
   method_to_stratify_patients: ReProMSig_defined

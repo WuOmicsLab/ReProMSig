@@ -70,6 +70,7 @@ advanced_settings:
   bootstrap_iterations: 200
   bootstrap_frequency: 50
 
+  batch_correction: FALSE
   variables_for_nomogram: NULL
   method_to_stratify_patients: Percentile
   # for number_of_groups = 2

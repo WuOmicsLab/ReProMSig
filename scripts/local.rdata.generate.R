@@ -83,7 +83,7 @@ outpath <- b.user.sig.path
 mysetwd(outpath)
 
 dir.create(paste0(b.user.sig.path, "/upload/"))
-rdata.filename <- paste0(outpath, "/upload/", b.name.sig, '.local.RData')
+rdata.filename <- paste0(outpath, "/upload/", b.name.sig.id, ".", Sys.Date(), ".local.RData")
 
 signature_result_introduction_text <- paste0("<ul>
 						<p><li><b>Summary</b> tab shows summary of the developed signature, clinicopathological statistics, molecular profiles distribution for used training dataset and validation dataset(s)</li></p>
