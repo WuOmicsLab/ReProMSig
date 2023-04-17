@@ -23,13 +23,10 @@ System requirements: <b>R >= 3.6.1</b> and <b>Python</b>.
 ```bash
 Rscript scripts/package.install.R
 ```
-<b>Note</b>: if the installation fails for some packages, try manual installation.
+<b>Note</b>: if the installation fails for some packages, please try manual installation as below:
+Linux users: specify the specific version, e.g., `remotes::install_version("glmnet", version = "3.0-2", repos = "https://cran.us.r-project.org")` 
 
-For Linux users: try to specify the version of specific package, e.g., 
-`remotes::install_version("glmnet", version = "3.0-2", repos = "https://cran.us.r-project.org")` 
-
-For Mac/Windows users: try to install the package with type = "binary", e.g., 
-`install.packages('glmnet', type='binary')`
+Mac/Windows users: install the package in binary format (type = "binary"), e.g., `install.packages('glmnet', type='binary')`
 
 2) Install [shyaml](https://github.com/0k/shyaml) package for processing user provided config files (YAML format).
 ```bash
