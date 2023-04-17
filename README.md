@@ -24,8 +24,9 @@ System requirements: <b>R >= 3.6.1</b> and <b>Python</b>.
 Rscript scripts/package.install.R
 ```
 <b>Note 1</b>: if the installation fails for some packages, try manual installation.
+
 For Linux users: try to specify the version of specific package, e.g., 
-`remotes::install_version("glmnet", version = "4.1-1", repos = "https://cran.us.r-project.org")` 
+`remotes::install_version("glmnet", version = "3.0-2", repos = "https://cran.us.r-project.org")` 
 
 For Mac/Windows users: try to install the package with type = "binary", e.g., 
 `install.packages('glmnet', type='binary')`
