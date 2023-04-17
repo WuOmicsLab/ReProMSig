@@ -23,7 +23,7 @@ System requirements: <b>R >= 3.6.1</b> and <b>Python</b>.
 ```bash
 Rscript scripts/package.install.R
 ```
-<b>Note 1</b>: if the installation fails for some packages, try manual installation.
+<b>Note</b>: if the installation fails for some packages, try manual installation.
 
 For Linux users: try to specify the version of specific package, e.g., 
 `remotes::install_version("glmnet", version = "3.0-2", repos = "https://cran.us.r-project.org")` 
