@@ -117,7 +117,7 @@ htmltools::HTML('
 ```
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item4a_validation_source <- gsub("\n","<br /> ",item4a_validation_source)
+item4a_validation_source <- gsub("\n"," <br /> ",item4a_validation_source)
 item4a_validation_source <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item4a_validation_source)
 item4a_validation_source <- paste0("<p style=\"text-align: justify;margin-left:25px\">",item4a_validation_source,"</p>")
 htmltools::HTML(
@@ -144,7 +144,7 @@ htmltools::HTML('
 ```
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item4a_validation_study_date <- gsub("\n","<br /> ",item4a_validation_study_date)
+item4a_validation_study_date <- gsub("\n"," <br /> ",item4a_validation_study_date)
 item4a_validation_study_date <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item4a_validation_study_date)
 item4a_validation_study_date <- paste0("<p style=\"text-align: justify\">",item4a_validation_study_date,"</p>")
 htmltools::HTML(
@@ -178,7 +178,7 @@ htmltools::HTML('
 ```
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item5a_validation_setting <- gsub("\n","<br /> ",item5a_validation_setting)
+item5a_validation_setting <- gsub("\n"," <br /> ",item5a_validation_setting)
 item5a_validation_setting <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5a_validation_setting)
 item5a_validation_setting <- paste0("<p style=\"text-align: justify;margin-left:25px\">",item5a_validation_setting,"</p>")
 htmltools::HTML(
@@ -242,7 +242,7 @@ htmltools::HTML('
 ```
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item5b_validation_exclusion_user <- gsub("\n","<br /> ",item5b_validation_exclusion_user)
+item5b_validation_exclusion_user <- gsub("\n"," <br /> ",item5b_validation_exclusion_user)
 item5b_validation_exclusion_user <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5b_validation_exclusion_user)
 item5b_validation_exclusion_user <- paste0("<p style=\"text-align: justify;margin-left:65px\">",item5b_validation_exclusion_user,"</p>")
 htmltools::HTML(
@@ -259,7 +259,7 @@ htmltools::HTML('
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
 item5b_validation_exclusion_web <- gsub("ReProMSig","ReProMSig",item5b_validation_exclusion_web)
-item5b_validation_exclusion_web <- gsub("\n","<br /> ",item5b_validation_exclusion_web)
+item5b_validation_exclusion_web <- gsub("\n"," <br /> ",item5b_validation_exclusion_web)
 item5b_validation_exclusion_web <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5b_validation_exclusion_web)
 item5b_validation_exclusion_web <- paste0("<p style=\"text-align: justify;margin-left:65px\">",item5b_validation_exclusion_web,"</p>")
 htmltools::HTML(   
@@ -275,7 +275,7 @@ htmltools::HTML('
 ```
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item5b_validation_inclusion_user <- gsub("\n","<br /> ",item5b_validation_inclusion_user)
+item5b_validation_inclusion_user <- gsub("\n"," <br /> ",item5b_validation_inclusion_user)
 item5b_validation_inclusion_user <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5b_validation_inclusion_user)
 item5b_validation_inclusion_user <- paste0("<p style=\"text-align: justify;margin-left:65px\">",item5b_validation_inclusion_user,"</p>")
 htmltools::HTML(   
@@ -291,7 +291,7 @@ htmltools::HTML('
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
 item5b_validation_inclusion_web <- gsub("ReProMSig","ReProMSig",item5b_validation_inclusion_web)
-item5b_validation_inclusion_web <- gsub("\n","<br /> ",item5b_validation_inclusion_web)
+item5b_validation_inclusion_web <- gsub("\n"," <br /> ",item5b_validation_inclusion_web)
 item5b_validation_inclusion_web <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5b_validation_inclusion_web)
 item5b_validation_inclusion_web <- paste0("<p style=\"text-align: justify;margin-left:65px\">",item5b_validation_inclusion_web,"</p>")
 htmltools::HTML(   
@@ -316,7 +316,7 @@ htmltools::HTML(
 <p style="text-align: justify;margin-left:25px">`r item5c_training`</p>
 
 ```{r, eval= used_validation_dataset_exists, echo=FALSE}
-item5c_validation <- gsub("\n","<br /> ",item5c_validation)
+item5c_validation <- gsub("\n"," <br /> ",item5c_validation)
 item5c_validation <- style_datasetname(dataset_name=used_validation_dataset,dataset_name0=used_validation_dataset0,dataset_style=valid_style,text=item5c_validation)
 item5c_validation0 <- paste0("<p><b>Validation dataset(s)</b></p><ul><li><b>Treatment details</b></li></ul><p style=\"text-align: justify;margin-left:25px\">",item5c_validation,"</p>")
 htmltools::HTML(   

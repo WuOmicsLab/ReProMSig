@@ -512,7 +512,7 @@ adv_default <- list(predictor_selection = "Yes", predictor_selection_method = "S
                     combine_age_cutoff = NULL, combine_stage_category1 = NULL, combine_stage_category2 = NULL,
                     combine_N_category1 = NULL, combine_N_category2 = NULL, combine_T_category1 = NULL, combine_T_category2 = NULL,
                     variables_for_nomogram = NULL, candidate_predictors_for_signature_wout_molecular_data = NULL,
-                    patients_used_for_predictive_signature = NULL, variables_for_interaction_ColoGuide_Stage_II_local = NULL,
+                    patients_used_for_predictive_signature = NULL, variables_for_interaction_test = NULL,
                     control_regimen = NULL, control_treatment_setting = NULL, control_treatment_type = NULL, 
                     treatment_regimen = NULL, treatment_treatment_setting = NULL, treatment_treatment_type = NULL)
 ##
@@ -538,7 +538,7 @@ id_map <- c("b.predictor.selection","b.predictor.selection.methods",
             "b.subgroup.variable","b.combine.age","b.combine.stage1","b.combine.stage2",
             "b.combine.n1","b.combine.n2","b.combine.t1","b.combine.t2",
             "b.nomogram.variables", "b.clinicopathological.predictors",
-            "b.predictive.modeling.data","b.interaction.ColoGuide_Stage_II_local",
+            "b.predictive.modeling.data","b.interaction.test",
             "b.control.regimen","b.control.treatment.setting","b.control.treatment.type",
             "b.treatment.regimen","b.treatment.treatment.setting","b.treatment.treatment.type")
 
@@ -553,7 +553,7 @@ names(id_map) <- c("predictor_selection","predictor_selection_method",
                    "combine_N_category1","combine_N_category2","combine_T_category1","combine_T_category2",
                    "variables_for_nomogram", "candidate_predictors_for_signature_wout_molecular_data",
 
-                   "patients_used_for_predictive_signature","variables_for_interaction_ColoGuide_Stage_II_local",
+                   "patients_used_for_predictive_signature","variables_for_interaction_test",
                    "control_regimen","control_treatment_setting","control_treatment_type",
                    "treatment_regimen","treatment_treatment_setting","treatment_treatment_type")
 
@@ -621,7 +621,7 @@ save(b.user.sig.path, b.primary.site, b.sample.type,
      b.cutpoint.method, b.group, b.high2, b.low2,
      b.high3, b.moderate3, b.low3,
 
-     b.predictive.modeling.data, b.interaction.ColoGuide_Stage_II_local,
+     b.predictive.modeling.data, b.interaction.test,
      b.control.regimen, b.control.treatment.setting, b.control.treatment.type,
      b.treatment.regimen, b.treatment.treatment.setting, b.treatment.treatment.type,
 

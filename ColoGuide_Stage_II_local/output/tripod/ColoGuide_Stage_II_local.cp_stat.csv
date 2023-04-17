@@ -1,5 +1,5 @@
 "Raw Rank","Variable","Level","High risk<br />Training dataset","Low risk<br />Training dataset","P<br />Training dataset","High risk<br />ProLT_stageIII","Low risk<br />ProLT_stageIII","P<br />ProLT_stageIII"
-1,"MSI_status","","","","0.345","","","0.021"
+1,"MSI_status","","","","0.345","","","0.022"
 2,"MSI_status","MSI-H","1","11","","0","9",""
 3,"MSI_status","MSI-L","1","4","","7","6",""
 4,"MSI_status","MSS","19","50","","15","36",""
