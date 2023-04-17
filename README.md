@@ -23,6 +23,7 @@ System requirements: <b>R >= 3.6.1</b> and <b>Python</b>.
 ```bash
 Rscript scripts/package.install.R
 ```
+Note: if the installation fails for some packages, try manual installation.
 
 2) Install [shyaml](https://github.com/0k/shyaml) package for processing user provided config files (YAML format).
 ```bash
