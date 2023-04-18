@@ -37,6 +37,9 @@ install.packages('glmnet', type='binary')
 pip install shyaml
 ```
 
+3) Install [pandoc](https://www.pandoc.org/) for converting the RMarkdown document to a HTML-format reporting file
+pandoc shoud be installed and version 1.12.3 or higher is required.
+
 ## Prepare data before running
 
 The portal script `repromsig.sh` takes two config files in YAML format as input. User need to provide clinicopathological and/or molecular profiles that will be used as training and validation cohort(s).
