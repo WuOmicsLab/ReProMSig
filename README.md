@@ -37,7 +37,7 @@ install.packages('glmnet', type='binary')
 pip install shyaml
 ```
 
-3) Install [pandoc](https://www.pandoc.org/installing.html) (v1.12.3 or higher required) for converting RMarkdown document to the HTML-format reporting file. Please run `pandoc -v` to check your pandoc version.
+3) Install [pandoc](https://www.pandoc.org/installing.html) (v1.12.3 or higher required) for converting RMarkdown document to the HTML-format reporting file. Please run `pandoc -v` to check pandoc version if it has been installed on your system previously.
 
 
 ## Prepare data before running
