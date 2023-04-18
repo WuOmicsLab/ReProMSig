@@ -20,10 +20,10 @@ if(ARGS_MODE) {
 
 # 2) Library
 library(dplyr)
-library(tibble)
+#library(tibble)
 library(matrixStats)
 library(mfp)
-library(purrr)
+#library(purrr)
 
 # 3) derive files from conf ini
 get_value.ccb <- function(config_file, key = NULL) {
@@ -197,7 +197,9 @@ if(b.have.profiles == "Yes") {
                         select("log_transform_type") %>%
                         unlist() %>% as.character()
 
-    train.exp <- u_exp_list[[exp.name]] %>% set_names("Symbol", colnames(.)[-1])
+    #train.exp <- u_exp_list[[exp.name]] %>% set_names("Symbol", colnames(.)[-1])
+    train.exp <- u_exp_list[[exp.name]]
+    colnames(train.exp)[1] <- "Symbol"
     train.exp <- train.exp %>% select(Symbol, intersect(valid_samid, colnames(train.exp)))
     debug(train.exp, 5)
 
@@ -474,6 +476,10 @@ if(b.have.profiles == "Yes" & combat) {
                                     mutate(SampleID = sams, batch = data_name) %>% 
                                     select(SampleID, batch)
             batch_infos <- rbind(batch_info1, batch_info2) %>% tibble %>% mycolumn_to_rownames("SampleID")
+            
+            ##
+            if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+            if(!require("sva", quietly = TRUE)) { BiocManager::install("sva") }
             res_combat <- sva::ComBat(dat = mergedata, batch_infos$batch,
                                       mod = NULL,
                                       ref.batch = "Training dataset",

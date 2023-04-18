@@ -1,3 +1,13 @@
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Center for Cancer Bioinformatics
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Including functions to load in and preprocess data, perform statistical analysis.
+#
+
+
 # Read in and write out -----------------------------------------------------------
 # supporting xlsx, csv, maf and plain text format, if your file contain "#",please careful, and check the row and column number
 read.file <- function(file,startRow=1,header=TRUE) {
@@ -171,8 +181,8 @@ knnimpute <- function(data){
 
 ##
 mycolumn_to_rownames <- function (.data, var = "rowname") {
-    require(dplyr)
     require(rlang)
+    require(tibble)
     stopifnot(is.data.frame(.data))
     if (has_rownames(.data)) {
         cnd_signal(error_already_has_rownames())
@@ -765,7 +775,7 @@ survival_1VS2_plot_multi3 <- function(sample.survival, pts.cluster, control_grou
 # univariate cox regression for preditive model ---
 uni_cox.preditive <- function(pts_surv, clinic_ann, treatment_columnID = NULL) {
     require(survival)
-    require(plyr)
+    #require(plyr)
     if(is.null(treatment_columnID)) { stop("treatment columnID is not specified.") }
     ##
     train_df <- merge.data.frame(x=clinic_ann, y=pts_surv,by='SampleID',all.x=T)
@@ -864,7 +874,7 @@ uni_cox.preditive <- function(pts_surv, clinic_ann, treatment_columnID = NULL) {
 # multivariate cox regression for preditive model ---
 multi_cox.preditive <- function(pts_surv, clinic_ann, treatment_columnID = NULL) {
     require(survival)
-    require(plyr)
+    #require(plyr)
     if(is.null(treatment_columnID)) { stop("treatment columnID is not specified.") }
     ##
     train_df <- merge.data.frame(x=clinic_ann, y=pts_surv,by='SampleID',all.x=T)
@@ -983,7 +993,7 @@ multi_cox.preditive <- function(pts_surv, clinic_ann, treatment_columnID = NULL)
 # univariate cox regression for prognosis model ---
 uni_cox.prognosis <- function(pts_surv, clinic_ann) {
     require(survival)
-    require(plyr)
+    #require(plyr)
     train_df <- merge.data.frame(x=clinic_ann, y=pts_surv,by='SampleID',all.x=T)
     rownames(train_df) <- train_df[,1]
     train_df <- train_df[!is.na(train_df$time) & train_df$time>0,]
@@ -1087,7 +1097,8 @@ uni_cox.prognosis <- function(pts_surv, clinic_ann) {
 
 # multivariate cox regression for prognosis model ---
 multi_cox.prognosis <- function(pts_surv, clinic_ann) {
-    require(survival); require(plyr)
+    require(survival)
+    require(plyr)
     train_df <- merge.data.frame(x=clinic_ann, y=pts_surv,by='SampleID',all.x = TRUE)
     rownames(train_df) <- train_df[,1]
     train_df <- train_df[!is.na(train_df$time) & train_df$time>0,]
@@ -1399,7 +1410,13 @@ get_df_summary <- function(signature.type="Predictive",cp_df,dataset_name = NULL
       fixed_char_colname <- c("Age","Gender","Ethnicity","Treatment_type","T","N","M","Stage")
     }
     
-    fixed_colname <- c("Patient_ID","Sample_ID","Dataset_ID","Platform","Molecular_profiling","Primary_site","Disease_type","Sample_type","Is_primary_treatment","Treatment_type","Treatment_setting","Regimen","Age","Gender","Ethnicity","T","N","M","Stage_edition","Stage","OS_months","OS_status","RFS_months","RFS_status","DFS_months","DFS_status","DSS_months","DSS_status","PFS_months","PFS_status","TTP_months","TTP_status")
+    fixed_colname <- c("Patient_ID","Sample_ID","Dataset_ID","Platform","Molecular_profiling",
+                       "Primary_site","Disease_type","Sample_type","Is_primary_treatment",
+                       "Treatment_type","Treatment_setting","Regimen",
+                       "Age","Gender","Ethnicity","T","N","M","Stage_edition","Stage",
+                       "OS_months","OS_status","RFS_months","RFS_status",
+                       "DFS_months","DFS_status","DSS_months","DSS_status",
+                       "PFS_months","PFS_status","TTP_months","TTP_status")
     fixed_char_colname <- intersect(fixed_char_colname,colnames(cp_df))
     custom_colname <- setdiff(colnames(cp_df),c(fixed_colname,"Therapy","pStage"))
     custom_char_colname <- setdiff(custom_colname,c("OS_months","RFS_months","DFS_months","DSS_months","PFS_months","TTP_months"))
@@ -1626,8 +1643,10 @@ get_tripod_dataset_summary <- function(tripod_dataset_infos, user_filtered_datas
 	  tripod_datasets_summary_df = tripod_datasets_summary_href(df = tripod_datasets_summary_df,url_colname="pubmed_url",number_colname="pubmed_id")
     tripod_datasets_summary_df = tripod_datasets_summary_href(df = tripod_datasets_summary_df,url_colname="accession_url",number_colname="accession_number")
 	  tripod_datasets_summary_df = tripod_datasets_summary_href(df = tripod_datasets_summary_df,url_colname="clinical_url",number_colname="clinical_number")
-    #colnames(tripod_datasets_summary_df) <- c("Dataset name","Dataset ID","GEO url","Number of pts","Primary site","Disease type","Molecular profiling","Endpoint","Pubmed","Molecular dataset","Molecular dataset URL","Clinical trial Registry","Clinical trial URL","Pubmed URL","Class")
-    colnames(tripod_datasets_summary_df) <- c("Dataset name","Dataset ID","Number of pts","Primary site","Disease type","Molecular profiling","Endpoint","Pubmed","Molecular dataset","Molecular dataset URL","Clinical trial Registry","Clinical trial URL","Pubmed URL","Class")
+    colnames(tripod_datasets_summary_df) <- c("Dataset name","Dataset ID","Number of pts",
+                                              "Primary site","Disease type","Molecular profiling","Endpoint",
+                                              "Pubmed","Molecular dataset","Molecular dataset URL",
+                                              "Clinical trial Registry","Clinical trial URL","Pubmed URL","Class")
     tripod_datasets_summary_df <- tripod_datasets_summary_df[,c("Dataset name","Primary site","Disease type","Molecular dataset","Endpoint","Pubmed","Clinical trial Registry","Class")]
   } else {
     tripod_datasets_summary_df=B_train_vali_data(select_training_dataset=select_training_dataset,select_validation_dataset=used_validation_dataset,userupload_sqlite_path = FALSE, user_filtered_datasets_info = tripod_datasets_summary.df,filtered_datasets_type="B_User-filtered datasets") #%>%
@@ -1959,9 +1978,15 @@ get_summary_test <- function(train_valid_df_list, signature.type, used_validatio
   
   valid_keep_cols <- c()
   if(signature.type == "Predictive"){
-    train_keep_cols <- c("Level","Characteristic","Training dataset<br />All patients","Training dataset<br />Control<br />All patients","Training dataset<br />Treatment<br />All patients","Training dataset<br />Control vs Treatment<br />P value")
+    train_keep_cols <- c("Level","Characteristic","Training dataset<br />All patients",
+                         "Training dataset<br />Control<br />All patients",
+                         "Training dataset<br />Treatment<br />All patients",
+                         "Training dataset<br />Control vs Treatment<br />P value")
     for(va in used_validation_dataset){
-      valid_keep_col <- c(paste0(va,"<br />All patients"),paste0(va,"<br />Control<br />All patients"),paste0(va,"<br />Treatment<br />All patients"),paste0(va,"<br />Control vs Treatment<br />P value"))
+      valid_keep_col <- c(paste0(va,"<br />All patients"),
+                          paste0(va,"<br />Control<br />All patients"),
+                          paste0(va,"<br />Treatment<br />All patients"),
+                          paste0(va,"<br />Control vs Treatment<br />P value"))
       valid_keep_cols <- c(valid_keep_cols,valid_keep_col)
     }
     if(length(used_validation_dataset) > 0){
@@ -2002,7 +2027,10 @@ get_summary_test <- function(train_valid_df_list, signature.type, used_validatio
 }
 
 # set color to table
-get_format_datatable <- function(train_valid_df_list_names, signature.type, df, analysis = "Participant characteristic", train_name = "Training dataset", b.group = "2 groups", b.times=c(12,36,60), b.endpoint="OS", js_dir) {
+get_format_datatable <- function(train_valid_df_list_names, signature.type, df,
+                                 analysis = "Participant characteristic",
+                                 train_name = "Training dataset", b.group = "2 groups",
+                                 b.times=c(12,36,60), b.endpoint="OS", js_dir) {
   
   if(nrow(df) > 0) {
   format_colus <- c()
@@ -2111,10 +2139,18 @@ get_format_datatable <- function(train_valid_df_list_names, signature.type, df, 
       if(signature.type == "Predictive"){
         
 		if(b.group == "2 groups") {
-		    format_colu <- paste0(c("Benefit<br />","No-benefit<br />","P<br />","Benefit<br />Control<br />","Benefit<br />Treatment<br />","Benefit<br />P<br />","No-benefit<br />Control<br />","No-benefit<br />Treatment<br />","No-benefit<br />P<br />","P-subgroup<br />"),i_name)
+		    format_colu <- paste0(c("Benefit<br />","No-benefit<br />","P<br />","Benefit<br />Control<br />",
+                                "Benefit<br />Treatment<br />","Benefit<br />P<br />",
+                                "No-benefit<br />Control<br />","No-benefit<br />Treatment<br />",
+                                "No-benefit<br />P<br />","P-subgroup<br />"),i_name)
 			rep_time <- 10
         } else {
-			format_colu <- paste0(c("Benefit<br />","Intermediate group<br />","No-benefit<br />","P<br />","Benefit<br />Control<br />","Benefit<br />Treatment<br />","Benefit<br />P<br />","Intermediate group<br />Control<br />","Intermediate group<br />Treatment<br />","Intermediate group<br />P<br />","No-benefit<br />Control<br />","No-benefit<br />Treatment<br />","No-benefit<br />P<br />","P-subgroup<br />"),i_name)
+			format_colu <- paste0(c("Benefit<br />","Intermediate group<br />","No-benefit<br />","P<br />",
+                              "Benefit<br />Control<br />","Benefit<br />Treatment<br />","Benefit<br />P<br />",
+                              "Intermediate group<br />Control<br />","Intermediate group<br />Treatment<br />",
+                              "Intermediate group<br />P<br />","No-benefit<br />Control<br />",
+                              "No-benefit<br />Treatment<br />","No-benefit<br />P<br />","P-subgroup<br />"),
+                              i_name)
 			rep_time <- 14
 		}
 		uncol_num <- length(which(c("Variable","Value") %in% colnames(df)))
@@ -2279,7 +2315,10 @@ get_format_datatable <- function(train_valid_df_list_names, signature.type, df, 
         th_value_list <- c(th_value_list,list(htmltools::withTags(th(colspan = length(train_valid_df_list_names), 'Dataset Comparison (All Patients)'))))
       }
       th_name_list <- lapply(c(rep(c('All Patients', 'Control',
-                                     'Treatment','P'), length(train_valid_df_list_names)),compared_p_header_name), htmltools::withTags(th))
+                                     'Treatment','P'), 
+                                     length(train_valid_df_list_names)),
+                                     compared_p_header_name),
+                                     htmltools::withTags(th))
     } else {
       
       th_names <- c()
@@ -2343,9 +2382,10 @@ get_format_datatable <- function(train_valid_df_list_names, signature.type, df, 
                                  length(train_valid_df_list_names)), htmltools::withTags(th))
       } else {
 		th_name_list <- lapply(rep(c('Benefit','Intermediate group','No-benefit','P',
-									'Benefit\nControl','Benefit\nTreatment','Benefit\nP',
-									'Intermediate group\nControl','Intermediate group\nTreatment','Intermediate group\nP',
-                                    'No-benefit\nControl','No-benefit\nTreatment','No-benefit\nP','P-subgroup'), 
+                                 'Benefit\nControl','Benefit\nTreatment','Benefit\nP',
+                                 'Intermediate group\nControl','Intermediate group\nTreatment',
+                                 'Intermediate group\nP','No-benefit\nControl',
+                                 'No-benefit\nTreatment','No-benefit\nP','P-subgroup'), 
                                  length(train_valid_df_list_names)), htmltools::withTags(th))
 	  }
       
@@ -2435,14 +2475,18 @@ get_format_datatable <- function(train_valid_df_list_names, signature.type, df, 
     scrollY_value = FALSE
   }
   
-  data <- DT::datatable(df, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'), selection="single", container = sketch, #class = 'cell-border stripe',
-                        options = list(scrollX = TRUE, scrollY = scrollY_value, dom = 'Bt',buttons = c('csv', 'excel', 'print'), pageLength = 100, 
-                                       columnDefs = list(list(className = 'dt-center', targets = "_all")), #
+  data <- DT::datatable(df, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'),
+                        selection="single", container = sketch, #class = 'cell-border stripe',
+                        options = list(scrollX = TRUE, scrollY = scrollY_value, dom = 'Bt',
+                                       buttons = c('csv', 'excel', 'print'), pageLength = 100, 
+                                       columnDefs = list(list(className = 'dt-center', targets = "_all")),
                                        rowsGroup = rowsGroup_list, ordering=F, 
                                        headerCallback = JS(headerCallback_texts)
-                                       
                         )) 
-  rowspan_format_border <- colnames(df)[which(colnames(df) %in% c("Variable","Characteristic","Value","Level","Risk Group","Risk Groups","Group","Signature Group","Signature group","Predictive Group","Predictive Groups","Predictive group","Predictive groups","Value\n(Control, Treatment)","No. of Patients","No. of Events"))] 
+  rowspan_format_border <- colnames(df)[which(colnames(df) %in% c("Variable","Characteristic","Value","Level",
+                                                                  "Risk Group","Risk Groups","Group","Signature Group","Signature group",
+                                                                  "Predictive Group","Predictive Groups","Predictive group","Predictive groups",
+                                                                  "Value\n(Control, Treatment)","No. of Patients","No. of Events"))] 
   
   format_border_list <- c(format_border_list,list(rowspan_format_border))
   for(dt in 1:length(format_border_list)){
@@ -2485,9 +2529,19 @@ get_rowgroup_table <- function(df, coef = TRUE, have.profiles, train.profiles_ty
 			rowsGroup_list <- list(which(colnames(df) %in% "Variable")-1)
 			
 			if(nrow(df) > 15){
-				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'), selection="single",options = list(scrollX = TRUE, scrollY = 500, dom = 'Bt', buttons = c('csv', 'excel', 'print'), pageLength = 100, rowsGroup = rowsGroup_list, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'),
+                              selection="single",options = list(scrollX = TRUE, scrollY = 500, dom = 'Bt',
+                              buttons = c('csv', 'excel', 'print'), pageLength = 100,
+                              rowsGroup = rowsGroup_list,
+                              columnDefs = list(list(className = 'dt-left',
+                              targets = "_all"))))
 			}else{
-				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'), selection="single", options = list(scrollX = TRUE, dom = 'Bt', buttons = c('csv', 'excel', 'print'), pageLength = 100, rowsGroup = rowsGroup_list, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'),
+                              selection="single", options = list(scrollX = TRUE, dom = 'Bt',
+                              buttons = c('csv', 'excel', 'print'), pageLength = 100,
+                              rowsGroup = rowsGroup_list,
+                              columnDefs = list(list(className = 'dt-left',
+                              targets = "_all"))))
 			}
 			
 			for(dt in 1:length(format_border_list)){
@@ -2507,9 +2561,17 @@ get_rowgroup_table <- function(df, coef = TRUE, have.profiles, train.profiles_ty
 			}
 			
 			if(nrow(df) > 15){
-				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons', selection="single", options = list(scrollX = TRUE, scrollY = 500, dom = 'Bt', buttons = c('csv', 'excel', 'print'), pageLength = 100, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons',
+                                selection="single", options = list(scrollX = TRUE, scrollY = 500, dom = 'Bt',
+                                buttons = c('csv', 'excel', 'print'), pageLength = 100,
+                                columnDefs = list(list(className = 'dt-left',
+                                targets = "_all"))))
 			}else{
-				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons', selection="single", options = list(scrollX = TRUE, dom = 'Bt', buttons = c('csv', 'excel', 'print'), pageLength = 100, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+				data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons',
+                                selection="single", options = list(scrollX = TRUE, dom = 'Bt',
+                                buttons = c('csv', 'excel', 'print'), pageLength = 100,
+                                columnDefs = list(list(className = 'dt-left',
+                                targets = "_all"))))
 			}
 		}
 	} else {
@@ -2526,12 +2588,20 @@ get_rowgroup_table <- function(df, coef = TRUE, have.profiles, train.profiles_ty
 				}
 			}
 			 
-			data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons', selection="single", options = list(scrollX = TRUE, dom = 'Blfrtip', buttons = c('csv', 'excel', 'print'), pageLength = 10, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+			data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = 'Buttons',
+                                  selection="single", options = list(scrollX = TRUE, dom = 'Blfrtip',
+                                  buttons = c('csv', 'excel', 'print'), pageLength = 10,
+                                  columnDefs = list(list(className = 'dt-left', 
+                                  targets = "_all"))))
 		} else {
 			format_border_list <- list("Variable")
 			rowsGroup_list <- list(which(colnames(df) %in% "Variable")-1)
 			
-			data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'), selection="single",options = list(scrollX = TRUE, dom = 'Blfrtip', buttons = c('csv', 'excel', 'print'), pageLength = 10, rowsGroup = rowsGroup_list, columnDefs = list(list(className = 'dt-left', targets = "_all"))))
+			data <- DT::datatable({df}, escape=FALSE, rownames=FALSE, extensions = c('RowGroup','Buttons'),
+                                  selection="single",options = list(scrollX = TRUE, dom = 'Blfrtip', 
+                                  buttons = c('csv', 'excel', 'print'), pageLength = 10, rowsGroup = rowsGroup_list,
+                                  columnDefs = list(list(className = 'dt-left',
+                                  targets = "_all"))))
 			
 			for(dt in 1:length(format_border_list)){
 				data <- data %>%

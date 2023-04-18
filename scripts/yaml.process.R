@@ -25,8 +25,8 @@ if(ARGS_MODE) {
 library(dplyr)
 library(yaml)
 library(Hmisc)
-library(survival)
 library(survminer)
+
 
 # readin and preprocess  ---------------------------
 analysis.yaml.file <- tools::file_path_as_absolute(analysis.yaml.file)

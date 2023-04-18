@@ -1,27 +1,32 @@
+
 # Rscript scripts/package.install.R
-## packages installed by package remotes ------
+rm(list=ls())
+
+## packages installed by package remotes ---
 if (!require("remotes", quietly = TRUE))
     install.packages("remotes")
 
-packages <- c("cgwtools","openxlsx","doMC","DT",
-              "yaml","Hmisc","RSQLite","DBI","corrplot",
-              "forestplot","glmnet","superpc","mfp",
-              "pec","rms","survminer","survival","survivalROC",
-              "dplyr","plyr","purrr","rlang",
-              "glue","matrixStats","magrittr","digest",
-              "htmltools","rmarkdown","mailR")
+pkgs <- c("cgwtools","corrplot",
+          "digest","doMC","dplyr","DT",
+          "forestplot","glmnet","glue","Hmisc",
+          "htmltools","matrixStats","mfp",
+          "pec","plyr","rlang","rmarkdown",
+          "rms", "superpc","survival",
+          "survivalROC","survminer",
+          "yaml","tibble","tools")
+newpkgs <- pkgs[!(pkgs %in% installed.packages()[, "Package"])]
 
-newPackages <- packages[!(packages %in% installed.packages()[,"Package"])]
+##
 repos <- "http://cran.us.r-project.org"
-for(x in newPackages) { 
+for(x in newpkgs) {
     if(!require(x, quietly = TRUE)) { remotes::install_version(x, upgrade="never", repos = repos) }
 }
 
-## packages installed by package BiocManager ------
-if (!require("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
-packages <- c("impute", "plotly", "sva")
-newPackages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(newPackages) > 0) BiocManager::install(newPackages)
+## packages installed by package BiocManager ---
+if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+if(!require("impute", quietly = TRUE)) { BiocManager::install("impute") }
 
 print("Required R packages are installed successfully!")
+
+
+

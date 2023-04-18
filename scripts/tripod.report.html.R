@@ -28,7 +28,6 @@ if(ARGS_MODE) {
 library(yaml)
 library(cgwtools)
 library(DT)
-library(magrittr)
 library(dplyr)
 library(digest)
 library(htmltools)
