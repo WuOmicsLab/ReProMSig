@@ -1,4 +1,11 @@
-# Rscript scripts/model.analysis.R ColoGuide_Stage_II_local/output/sig.ini
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Perform predictor selection, multivariable prediction model building, signature score calculation and patient risk group stratification.
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
@@ -437,6 +444,8 @@ if(b.signature.type == "Predictive") {
 combat <- ifelse(!is.null(b.batch.correction), TRUE, FALSE)
 if(b.have.profiles == "Yes" & combat) {
     if(ncol(Train) > 10) {
+        if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")
+        if(!require("sva", quietly = TRUE)) { BiocManager::install("sva") }
         debug(Train, 5)
         train0 <- data.frame(Symbol = colnames(Train), t(Train), check.names=F)
         debug(train0, 5)
@@ -478,8 +487,6 @@ if(b.have.profiles == "Yes" & combat) {
             batch_infos <- rbind(batch_info1, batch_info2) %>% tibble %>% mycolumn_to_rownames("SampleID")
             
             ##
-            if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager")
-            if(!require("sva", quietly = TRUE)) { BiocManager::install("sva") }
             res_combat <- sva::ComBat(dat = mergedata, batch_infos$batch,
                                       mod = NULL,
                                       ref.batch = "Training dataset",
@@ -624,8 +631,6 @@ if(b.have.profiles == "Yes") {
 
                 ##
                 spca_genes_freq <- (table(spca_genes)/boot_n)
-                spca_genes_freq["MT1M"]
-
                 siggenes = names(spca_genes_freq[spca_genes_freq >= boot_freq])
                 print("Bootstrapped SPCA successful!")
             }

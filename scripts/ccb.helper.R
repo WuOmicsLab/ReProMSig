@@ -7,7 +7,6 @@
 # @Description: Including functions to load in and preprocess data, perform statistical analysis.
 #
 
-
 # Read in and write out -----------------------------------------------------------
 # supporting xlsx, csv, maf and plain text format, if your file contain "#",please careful, and check the row and column number
 read.file <- function(file,startRow=1,header=TRUE) {
@@ -1594,24 +1593,30 @@ age_summary <- function(age_value) {
   }
   return(age)
 } 
-
+ 
 ##
-get_tripod_dataset_summary <- function(tripod_dataset_infos, user_filtered_datasets_info0, b.have.profiles, select_training_dataset, used_validation_dataset) {
+get_tripod_dataset_summary <- function(tripod_dataset_infos, user_filtered_datasets_info0,
+                                       b.have.profiles, select_training_dataset,
+                                       used_validation_dataset) {
   if(nrow(tripod_dataset_infos) > 0) {
-    geo_url_id <- which(colnames(mtcars) %in% "geo_url")
+    geo_url_id <- which(colnames(user_filtered_datasets_info0) %in% "geo_url")
     if(length(geo_url_id) > 0) {
-       subset(mtcars, select = -geo_url_id)
+       subset(user_filtered_datasets_info0, select = -geo_url_id)
     }
-    tripod_datasets_summary.df <- merge.data.frame(user_filtered_datasets_info0,tripod_dataset_infos,by.x = "dataset_name",by.y="dataset_name",all.x=TRUE,sort=F)
+    tripod_datasets_summary.df <- merge.data.frame(user_filtered_datasets_info0,
+                                                   tripod_dataset_infos, 
+                                                   by.x = "dataset_name",
+                                                   by.y="dataset_name",
+                                                   all.x=TRUE,sort=F)
     for(i in 1:nrow(tripod_datasets_summary.df)){
       #if(!is.na(tripod_datasets_summary.df[i,"pubmed_id"])){
-	  if(tripod_datasets_summary.df[i,"pubmed_id"] != "" & !is.na(tripod_datasets_summary.df[i,"pubmed_id"])) {
-		pubmed_ids <- strsplit(tripod_datasets_summary.df[i,"pubmed_id"],", ")[[1]]
-		#pubmed_ids <- gsub(" ","",pubmed_ids)
-		tripod_datasets_summary.df[i,"pubmed_url"] <- paste0(paste0("https://pubmed.ncbi.nlm.nih.gov/",pubmed_ids),collapse = ", ")
-        #tripod_datasets_summary.df[i,"pubmed_url"] <- paste0("https://pubmed.ncbi.nlm.nih.gov/",tripod_datasets_summary.df[i,"pubmed_id"])
+      if(tripod_datasets_summary.df[i,"pubmed_id"] != "" & !is.na(tripod_datasets_summary.df[i,"pubmed_id"])) {
+      pubmed_ids <- strsplit(tripod_datasets_summary.df[i,"pubmed_id"],", ")[[1]]
+      #pubmed_ids <- gsub(" ","",pubmed_ids)
+      tripod_datasets_summary.df[i,"pubmed_url"] <- paste0(paste0("https://pubmed.ncbi.nlm.nih.gov/",pubmed_ids),collapse = ", ")
+          #tripod_datasets_summary.df[i,"pubmed_url"] <- paste0("https://pubmed.ncbi.nlm.nih.gov/",tripod_datasets_summary.df[i,"pubmed_id"])
       } else {
-        tripod_datasets_summary.df[i,"pubmed_url"] <- ""
+          tripod_datasets_summary.df[i,"pubmed_url"] <- ""
       }
     }
     

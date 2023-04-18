@@ -1,5 +1,11 @@
-# Rscript scripts/performance.analysis.R ColoGuide_Stage_II_local/output/sig.ini
-
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Perform model evaluation, including time dependent receiver operating characteristic (ROC), prediction error (PE) , and calibration analysis.
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())

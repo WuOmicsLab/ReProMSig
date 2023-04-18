@@ -1,5 +1,11 @@
-# Rscript scripts/yaml.process.R ColoGuide_Stage_II_local/input/analysis.yaml /opt/shiny-server/apps/repromsig_0417/
-
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Tingting Zhao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Data processing and extract analysis parameters from the user-provided analysis.yaml.
+#
 
 # HEADER ------------------------------------------------------------------ 
 rm(list=ls())

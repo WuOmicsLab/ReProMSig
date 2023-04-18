@@ -1,5 +1,11 @@
-# Rscript scripts/tripod.report.html.R ColoGuide_Stage_II_local/input/reporting.yaml ColoGuide_Stage_II_local/output/sig.ini ColoGuide_Stage_II_local/output/tripod.ini
-
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Tingting Zhao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Tingting Zhao
+# @Description: Export the reporting html file by extract data from analysis output and used-provided "tripod yaml file".
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
@@ -18,9 +24,9 @@ if(ARGS_MODE) {
   user.config.ini.file <- args[2]
   tripod.ini.file <- args[3]
 } else {
-  reporting.yaml.file <- "ColoGuide_Stage_II_local/input/reporting.yaml"
-  user.config.ini.file <- "ColoGuide_Stage_II_local/output/sig.ini"
-  tripod.ini.file <- "ColoGuide_Stage_II_local/output/tripod.ini"
+  reporting.yaml.file <- "/mnt/dellfs/lab/GC_signature/ReProMSig-main/ColoGuide_Stage_II_local/input/reporting.yaml"
+  user.config.ini.file <- "/mnt/dellfs/lab/GC_signature/ReProMSig-main/ColoGuide_Stage_II_local/output/sig.ini"
+  tripod.ini.file <- "/mnt/dellfs/lab/GC_signature/ReProMSig-main/ColoGuide_Stage_II_local/output/tripod.ini"
 }
 
 
@@ -31,6 +37,7 @@ library(DT)
 library(dplyr)
 library(digest)
 library(htmltools)
+library(rmarkdown)
 
 # 3) derive files from conf ini
 get_value.ccb <- function(config_file, key = NULL) {
@@ -77,7 +84,6 @@ conf <- read_yaml(reporting.yaml.file)
 # source functions ---
 source(paste0(script.dir, "/ccb.helper.R"))
 js_dir = paste0(repromsig.dir, "/config/")
-
 
 # user input ---------------------
 generator <- conf$Lead_contact
@@ -1489,7 +1495,8 @@ if(nrow(coef1) > 0) {
          association_text, local_min_age, local_max_age,
          local_molecular_profiling,
          local_model_summary, local_model_text,
-         b.prognostic.treatment, b.prognostic.treatment.setting, b.prognostic.regimen,
+         b.prognostic.treatment, b.prognostic.treatment.setting,
+         b.prognostic.regimen,
          
          file = add_info_tripod_rdata)
   
@@ -1589,46 +1596,42 @@ if(nrow(coef1) > 0) {
   
   m_source = "Private signature"
   
-  local_sig_df = data.frame("signature_id"=signature_id, "signature_name"=m_signature_name, "signature_description" = signature_description,
-                            "development_date"=m_development_date, "signature_gene"=m_signature_gene,
+  local_sig_df = data.frame("signature_id"=signature_id, "signature_name"=m_signature_name,
+                            "signature_description" = signature_description,
+                            "development_date"=m_development_date,
+                            "signature_gene"=m_signature_gene,
                             "coefficients"=m_coefs,"primary_site"=m_primary_site,
                             "disease_type"=m_disease_type,"sample_type"=m_sample_type,
-                            "molecular_profiling"=m_platform_type,"signature_type"=m_signature_type,
+                            "molecular_profiling"=m_platform_type,
+                            "signature_type"=m_signature_type,
                             "is_primary_treatment"=m_is_primary_treatment,
-                            "treatment_type"=m_treatment_type,"treatment_setting"=m_treatment_setting,
-                            "regimen"=m_regimen,"gender"=m_gender,"ethnicity"=m_ethnicity,
-                            "endpoint"=m_endpoint,"stage_edition"=m_stage_edition,"stage"=m_stage,
-                            "training_dataset"=m_training,"validation_datasets"=m_validation,
-                            "signature_path"=m_signature_path,"signature_group"=m_signature_group,
+                            "treatment_type"=m_treatment_type,
+                            "treatment_setting"=m_treatment_setting,
+                            "regimen"=m_regimen,"gender"=m_gender,
+                            "ethnicity"=m_ethnicity, "endpoint"=m_endpoint,
+                            "stage_edition"=m_stage_edition,"stage"=m_stage,
+                            "training_dataset"=m_training,
+                            "validation_datasets"=m_validation,
+                            "signature_path"=m_signature_path,
+                            "signature_group"=m_signature_group,
                             "source"=m_source)
   
   resave(local_sig_df, file = add_info_tripod_rdata)
   
   # download tripod -------------------------------------------------------
-  dir.create(paste0(b.user.sig.path, "/upload/"))
+  dir0 <- paste0(b.user.sig.path, "/upload/")
+  if(!dir.exists(dir0)) { dir.create(dir0) }
   file <- paste0(b.user.sig.path, "/upload/", b.name.sig.id, ".", Sys.Date(), ".report.html")
-  src <- ifelse(b.have.profiles == "Yes",
-                normalizePath(paste0(script.dir,"/rmarkdown_exp.Rmd")),
-                normalizePath(paste0(script.dir,"/rmarkdown_noexp.Rmd")))
-  
-  
   rmd.file <- ifelse(b.have.profiles == "Yes",
                      paste0(repromsig.dir, "/config/rmarkdown_exp.Rmd"),
                      paste0(repromsig.dir, "/config/rmarkdown_noexp.Rmd"))
-  
-  
-  owd <- setwd(tempdir())
-  on.exit(setwd(owd))
-  file.copy(src, rmd.file, overwrite = TRUE)
-  library(rmarkdown)
+
   out <- render(rmd.file, html_document())
-  
   file.rename(out, file)
-  
-  if(file.exists(file)) {
-    print(paste0("Output created: ", file))
-  }
+  if(file.exists(file)) { print(paste0("Output created: ", file)) }
 } else {
   message_nosignature <- "There was no signature detected!"
   print(message_nosignature)
 }
+
+

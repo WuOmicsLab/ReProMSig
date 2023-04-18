@@ -2,10 +2,10 @@
 
 '''
 @Copyright: Peking University Cancer Hosptial, All Rights Reserved.
-@Author: Du Yang
-@Date: 2020-02-28 11:03:40
-@LastEditors: Du Yang
-@LastEditTime: 2020-03-12 10:15:23
+@Author: Center for Cancer Bioinformatics
+@Date: 2022-01
+@LastEditors: 
+@LastEditTime: 
 @Description: create, update, and combine config file
 '''
 

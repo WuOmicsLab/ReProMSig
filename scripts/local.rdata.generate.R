@@ -1,4 +1,11 @@
-# Rscript scripts/local.rdata.generate.R ColoGuide_Stage_II_local/output/sig.ini ColoGuide_Stage_II_local/output/tripod.ini
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Export the RData file that could be uploaded to the ReProSig website, for displaying and sharing.
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())

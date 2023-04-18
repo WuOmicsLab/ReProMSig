@@ -1,4 +1,11 @@
-# bash scripts/repromsig.sh ColoGuide_Stage_II_local/input/analysis.yaml ColoGuide_Stage_II_local/input/reporting.yaml
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: The portal script repromsig.sh takes two config files in YAML format as input. User need to provide clinicopathological and/or molecular profiles that will be used as training and validation cohort(s).
+
 
 #!/usr/bin/bash
 # parameters

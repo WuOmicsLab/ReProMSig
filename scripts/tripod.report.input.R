@@ -1,12 +1,17 @@
-# Rscript scripts/tripod.report.input.R ColoGuide_Stage_II_local/output/sig.ini
-
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Generate the variables, tables and graphs for a signature that will be shown in the reporting file.
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
 options(stringsAsFactors = FALSE)
 DEBUG_MODE = FALSE
 ARGS_MODE = TRUE
-
 
 # Input/Output/Lib/Config/Params ------------------------------------------
 # 1) Parameters

@@ -1,5 +1,12 @@
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Perform univariate and multivariate Cox regression analyses, to test whether the signature is an independent prognostic or predictive factor.
+#
 
-# Rscript scripts/independence.analysis.R ColoGuide_Stage_II_local/output/sig.ini
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
 options(stringsAsFactors = FALSE)

@@ -1,5 +1,11 @@
-# Rscript scripts/KM.evaluate.analysis.R ColoGuide_Stage_II_local/output/sig.ini
-
+#
+# @Copyright: Peking University Cancer Hospital, All Rights Reserved.
+# @Author: Lihua Cao
+# @Date: 2022-01
+# @LastEditTime: 2023-04-16
+# @LastEditors: Lihua Cao
+# @Description: Inspect the survival differences between risk groups by Kaplan-Meier analysis and log-rank test.
+#
 
 # HEADER ------------------------------------------------------------------
 rm(list=ls())
